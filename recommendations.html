@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="navbar">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="popular.html">Popular Songs</a></li>
+        <li><a href="recommendations.html">Similar Songs Finder</a></li>
+    </div>
+    <div class="container">
+        <header>Similar Songs Generator</header>
+        <div class="search-wrapper">
+            <form id="search_bar" action="" autocomplete="off">
+                <input type="hidden" id="hidden_token">
+                <input type="text" placeholder="Type a song name" name="search" data-search>
+            </form>
+            <button type="submit" id="btn_submit">Generate</button>
+            <!-- selected songs-->
+            <div id="selected_songs">
+                <template data-selected-songs-template>
+                    <span class="label">
+                        
+                    </span>
+                </template>
+            </div>
+        </div>
+        <!--Searched Songs-->
+        <div id="search-cards" data-song-card-container>
+            <template data-song-template>
+                <span class="card">
+                </span>
+            </template>
+        </div>
+        <!-- Resulting Songs-->
+        <div id="recommendations" class="inactive" data-rec-container>
+            <template data-recommendations>
+                <span class="card">
+                    <a href=""><img src="" alt="" height="100px" width="100px"></a>
+                    <div></div>
+                    <span></span>
+                </span>
+            </template>
+        </div>
+    </div>
+</body>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script src="recommend.js"></script>
+</html> 

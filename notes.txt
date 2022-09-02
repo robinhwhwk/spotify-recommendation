@@ -1,0 +1,13 @@
+To add list
+1. Add YouTube/Spotify button on song card and a play button (track.preview_url)
+
+2. Newest Songs:
+    1. Get new songs from Japan, limit = 20
+    2. Sort by artist popularity
+
+5. Add buttons to song cards:
+    1. Find similar songs - recommend based on the song
+    2. Analyze song - give statistics on danceability, acousticness, etc.
+    3. Find spotify playlists that contain that song
+
+4. Recommend based on color of the album? - ex) monday blue - mood

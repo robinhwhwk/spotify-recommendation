@@ -290,17 +290,24 @@ const UIController = (function () {
         const artist = artists.join(", ");
 
         // add preview play button
-        const preview = `<input type="button" class="playbutton" onclick='UIController.playAudio("${track.preview_url}")' value="">`;
+        const preview = `<input type="button" class="playbutton" onclick='UIController.playAudio("${song.preview_url}")' value="" title="Play a preview">`;
 
-        const content = `<div class="songinfo">${preview}<div class="song"><div class="title">${track.name}</div><div class="artist">${artist}</div></div>`;
+        const content = `<div class="songinfo">${preview}<div class="song"><div class="title">${song.name}</div><div class="artist">${artist}</div></div>`;
 
         card.insertAdjacentHTML("beforeend", content);
+
         // add card to song card container
         songCardContainer.append(card);
 
         // create image html
         const img = `<div><img src="${track.album.images[0].url}" alt="" height="100px" width="100px"></div>`;
         card.insertAdjacentHTML("afterbegin", img);
+
+        // add youtube button
+        const yt = YoutubeController.getSearch(`${track.name} + ${artist}`);
+        const ytbutton = `<input type="button" class="ytbutton" onclick='window.open('https://www.youtube.com/watch?v=${yt}')' value="" title="Open in YouTube">`;
+        
+        card.children[1].insertAdjacentHTML("afterbegin", ytbutton);
 
         ranking += 1;
         card.insertAdjacentHTML("beforebegin", ranking);
@@ -350,17 +357,25 @@ const UIController = (function () {
       for (let i = 0; i < song.artists.length; ++i) {
         artists.push(song.artists[i].name);
       }
-      // add artist names to song card
-      card.textContent = song.name + " - " + artists.join(", ");
+      // add preview play button
+      const preview = `<input type="button" class="playbutton" onclick='UIController.playAudio("${song.preview_url}")' value="" title="Play a preview">`;
+
+      const content = `<div class="songinfo">${preview}<div class="song"><div class="title">${song.name}</div><div class="artist">${artist}</div></div>`;
+
+      card.insertAdjacentHTML("beforeend", content);
+
       // add card to song card container
-      recommendList.append(card);
+      songCardContainer.append(card);
+
       // create image html
-      const img = `<img src="${song.album.images[0].url}" alt="" height="100px" width="100px">`;
+      const img = `<div><img src="${song.album.images[0].url}" alt="" height="100px" width="100px"></div>`;
       card.insertAdjacentHTML("afterbegin", img);
-      // add button to song cards. when you click, it adds the song to the seed list
-      // add preview button to the cards
-      const preview = `<input type="button" onclick='UIController.playAudio("${song.preview_url}")' value="Play">`;
-      card.insertAdjacentHTML("afterbegin", preview);
+
+      // add youtube button
+      const yt = YoutubeController.getSearch(`${song.name} + ${artist}`);
+      const ytbutton = `<input type="button" class="ytbutton" onclick='window.open('https://www.youtube.com/watch?v=${yt}')' value="" title="Open in YouTube">`;
+      
+      card.children[1].insertAdjacentHTML("afterbegin", ytbutton);
       if (song.preview_url == null) {
         card.insertAdjacentHTML(
           "beforeend",

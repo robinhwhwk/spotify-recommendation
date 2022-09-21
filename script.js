@@ -290,9 +290,9 @@ const UIController = (function () {
         const artist = artists.join(", ");
 
         // add preview play button
-        const preview = `<input type="button" class="playbutton" onclick='UIController.playAudio("${song.preview_url}")' value="" title="Play a preview">`;
+        const preview = `<input type="button" class="playbutton" onclick='UIController.playAudio("${track.preview_url}")' value="" title="Play a preview">`;
 
-        const content = `<div class="songinfo">${preview}<div class="song"><div class="title">${song.name}</div><div class="artist">${artist}</div></div>`;
+        const content = `<div class="songinfo">${preview}<div class="song"><div class="title">${track.name}</div><div class="artist">${artist}</div></div>`;
 
         card.insertAdjacentHTML("beforeend", content);
 

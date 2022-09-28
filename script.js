@@ -124,7 +124,7 @@ const APIController = (function () {
 
   const _getRecommendations = async (token, seedTracks) => {
     const result = await fetch(
-      `https:api.spotify.com/v1/recommendations?limit=10&seed_tracks=${seedTracks}`,
+      `https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=${seedTracks}`,
       {
         method: "GET",
         headers: { Authorization: "Bearer " + token },

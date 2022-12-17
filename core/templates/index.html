@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+{% block title %}
+<title>J-pop Recommender</title>
+{% endblock %} 
+{% block content %}
+    <div class="container">
+        <header>J-Pop Song Recommender</header>
+        <p>J-pop Song Recommender is a tool for getting recommendations based on your favorite songs.</p>
+        <p> You can naviage to Similar Songs Finder to search for songs.</p>
+        <p> Here are some of the newest J-pop releases.</p>
+    </div>
+    <div class="container">
+        <input type="hidden" id="hidden_token">
+        <header>New Releases Japan</header>
+        <div id="song-cards" data-song-card-container>
+            <template data-song-template>
+                <span class="card">
+                </span>
+            </template>
+        </div>
+    </div>
+{% endblock %}

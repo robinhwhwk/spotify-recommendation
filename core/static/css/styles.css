@@ -149,7 +149,7 @@ header {
   font-size: 2rem;
 }
 
-#navbar {
+.navbar {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -157,7 +157,7 @@ header {
   overflow: hidden;
 }
 
-#navbar a {
+.navbar a {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -166,7 +166,7 @@ header {
   text-decoration: none;
 }
 
-#navbar a:hover {
+.navbar a:hover {
   background-color: #111;
 }
 

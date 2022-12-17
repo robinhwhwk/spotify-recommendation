@@ -11,7 +11,7 @@ window.onscroll = function () {
 };
 
 // get the navbar
-const navbar = document.getElementById("navbar");
+const navbar = document.getElementsByClassName("navbar");
 
 // get the offset position of the navbar
 const sticky = navbar.offsetTop;

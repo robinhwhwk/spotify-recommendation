@@ -3,16 +3,22 @@
 <title>J-pop Recommender</title>
 {% endblock %} 
 {% block content %}
+{% load static %}
+<script src="{% static 'js/audio.js' %}"></script>
 </head>
 <body>
     <div class="container">
         <input type="hidden" id="hidden_token">
         <header>Top 50 Japan</header>
-        <div id="song-cards" data-song-card-container>
-            <template data-song-template>
-                <span class="card">
-                </span>
-            </template>
+        {% for track in playlist %}
+        <div>
+            <p>{{ forloop.counter }}. {{ track.track.name }} by {{ track.track.artists.0.name }}</p>
+
+            <img src="{{ track.track.album.images.0.url }}" alt="" height="100" width="100">
+
+            <input type="button" class="playbutton" onclick='playAudio("{{ track.track.preview_url }}")' value="" title="Play a preview">
         </div>
+        {% endfor %}
     </div>
 {% endblock %}
+{% load static %}

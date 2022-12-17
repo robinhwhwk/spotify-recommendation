@@ -7,6 +7,9 @@ from django.shortcuts import render
 from django.views import View
 from django.urls import reverse
 from django.db.models import Q  # for queries
+from .apis import *
+from .spotify import *
+from .models import *
 
 # Create your views here.
 
@@ -18,9 +21,17 @@ class IndexView(View):
 
 class PopularView(View):
 
-    def get(self, request):
+    playlist_id = '37i9dQZEVXbKXQ4mDTEBXq'
 
-        return render(request, 'popular.html')
+    def get(self, request):
+        playlist = sp.playlist(self.playlist_id)
+        playlist = playlist['tracks']['items']
+        save_playlist(playlist)
+        context = {
+            'playlist' : playlist,
+        }
+
+        return render(request, 'popular.html', context=context)
 
 class RecommendationView(View):
 

@@ -1,199 +1,199 @@
-const songCardTemplate = document.querySelector("[data-song-template]");
-const songCardContainer = document.querySelector("[data-song-card-container]");
-const recommendationTemplate = document.querySelector("[data-recommendations]");
-const searchInput = document.querySelector("[data-search]");
-const searchBar = document.getElementById("search_bar");
-const seedTemplate = document.querySelector("[data-selected-songs-template]");
-const seedContainer = document.querySelector("#selected_songs");
+// const songCardTemplate = document.querySelector("[data-song-template]");
+// const songCardContainer = document.querySelector("[data-song-card-container]");
+// const recommendationTemplate = document.querySelector("[data-recommendations]");
+// const searchInput = document.querySelector("[data-search]");
+// const searchBar = document.getElementById("search_bar");
+// const seedTemplate = document.querySelector("[data-selected-songs-template]");
+// const seedContainer = document.querySelector("#selected_songs");
 
-window.onscroll = function () {
-  stickNavbar();
-};
+// window.onscroll = function () {
+//   stickNavbar();
+// };
 
-// get the navbar
-const navbar = document.getElementsByClassName("navbar");
+// // get the navbar
+// const navbar = document.getElementsByClassName("navbar");
 
-// get the offset position of the navbar
-const sticky = navbar.offsetTop;
+// // get the offset position of the navbar
+// const sticky = navbar.offsetTop;
 
-// add the sticky class to navbar
-function stickNavbar() {
-  if (window.scrollY >= sticky) {
-    navbar.classList.add("sticky");
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}
+// // add the sticky class to navbar
+// function stickNavbar() {
+//   if (window.scrollY >= sticky) {
+//     navbar.classList.add("sticky");
+//   } else {
+//     navbar.classList.remove("sticky");
+//   }
+// }
 
-const APIController = (function () {
-  const clientId = "07cb160ca31e4211a4e9dccff9254a8c";
-  const clientSecret = "bc0841f84e9f4eb781bb0e9b665cdfc7";
+// const APIController = (function () {
+//   const clientId = "07cb160ca31e4211a4e9dccff9254a8c";
+//   const clientSecret = "bc0841f84e9f4eb781bb0e9b665cdfc7";
 
-  // private methods
-  const _getToken = async () => {
-    const result = await fetch("https://accounts.spotify.com/api/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
-      },
-      body: "grant_type=client_credentials",
-    });
+//   // private methods
+//   const _getToken = async () => {
+//     const result = await fetch("https://accounts.spotify.com/api/token", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/x-www-form-urlencoded",
+//         Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
+//       },
+//       body: "grant_type=client_credentials",
+//     });
 
-    const data = await result.json();
-    return data.access_token;
-  };
+//     const data = await result.json();
+//     return data.access_token;
+//   };
 
-  const _getFeaturedTracks = async (token) => {
-    const limit = 10;
+//   const _getFeaturedTracks = async (token) => {
+//     const limit = 10;
 
-    const result = await fetch(
-      `https://api.spotify.com/v1/browse/categories/kpop/playlists/tracks?limit=${limit}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "applicaiton/json",
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
+//     const result = await fetch(
+//       `https://api.spotify.com/v1/browse/categories/kpop/playlists/tracks?limit=${limit}`,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Accept: "applicaiton/json",
+//           Authorization: "Bearer " + token,
+//         },
+//       }
+//     );
 
-    const data = await result.json();
-    return data.items;
-  };
+//     const data = await result.json();
+//     return data.items;
+//   };
 
-  const _getPopularTracks = async (token) => {
-    const limit = 10;
+//   const _getPopularTracks = async (token) => {
+//     const limit = 10;
 
-    const result = await fetch(
-      `https://api.spotify.com/v1/playlists/37i9dQZEVXbKXQ4mDTEBXq`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "applicaiton/json",
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-    const data = await result.json();
-    return data.tracks.items;
-  };
+//     const result = await fetch(
+//       `https://api.spotify.com/v1/playlists/37i9dQZEVXbKXQ4mDTEBXq`,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Accept: "applicaiton/json",
+//           Authorization: "Bearer " + token,
+//         },
+//       }
+//     );
+//     const data = await result.json();
+//     return data.tracks.items;
+//   };
 
-  const _getPlaylistByGenre = async (token) => {
-    const limit = 10;
+//   const _getPlaylistByGenre = async (token) => {
+//     const limit = 10;
 
-    const result = await fetch(
-      `https://api.spotify.com/v1/browse/categories/dinner/playlists?limit=${limit}`,
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token },
-      }
-    );
+//     const result = await fetch(
+//       `https://api.spotify.com/v1/browse/categories/dinner/playlists?limit=${limit}`,
+//       {
+//         method: "GET",
+//         headers: { Authorization: "Bearer " + token },
+//       }
+//     );
 
-    const data = await result.json();
-    return data.playlists.items;
-  };
+//     const data = await result.json();
+//     return data.playlists.items;
+//   };
 
-  const _getGenres = async (token) => {
-    const result = await fetch(
-      "https://api.spotify.com/v1/browse/categories?locale=sv_US",
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token },
-      }
-    );
+//   const _getGenres = async (token) => {
+//     const result = await fetch(
+//       "https://api.spotify.com/v1/browse/categories?locale=sv_US",
+//       {
+//         method: "GET",
+//         headers: { Authorization: "Bearer " + token },
+//       }
+//     );
 
-    const data = await result.json();
-    return data.categories.items;
-  };
+//     const data = await result.json();
+//     return data.categories.items;
+//   };
 
-  const _getSearch = async (token, searchTerm) => {
-    const result = await fetch(
-      `https://api.spotify.com/v1/search?q=${searchTerm}&type=track&limit=10`,
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token },
-      }
-    );
+//   const _getSearch = async (token, searchTerm) => {
+//     const result = await fetch(
+//       `https://api.spotify.com/v1/search?q=${searchTerm}&type=track&limit=10`,
+//       {
+//         method: "GET",
+//         headers: { Authorization: "Bearer " + token },
+//       }
+//     );
 
-    const data = await result.json();
-    return data.tracks.items;
-  };
+//     const data = await result.json();
+//     return data.tracks.items;
+//   };
 
-  const _getRecommendations = async (token, seedTracks) => {
-    const result = await fetch(
-      `https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=${seedTracks}`,
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token },
-      }
-    );
-    const data = await result.json();
-    return data.tracks;
-  };
+//   const _getRecommendations = async (token, seedTracks) => {
+//     const result = await fetch(
+//       `https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=${seedTracks}`,
+//       {
+//         method: "GET",
+//         headers: { Authorization: "Bearer " + token },
+//       }
+//     );
+//     const data = await result.json();
+//     return data.tracks;
+//   };
 
-  const _getPlaylistsWithSong = async (token, seedTrack) => {
-    const result = await fetch(
-      `https://api.spotify.com/v1/search?q=${seedTrack}&type=playlist&limit=20`,
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token },
-      }
-    );
-    const data = await result.json();
-    return data.items;
-  };
+//   const _getPlaylistsWithSong = async (token, seedTrack) => {
+//     const result = await fetch(
+//       `https://api.spotify.com/v1/search?q=${seedTrack}&type=playlist&limit=20`,
+//       {
+//         method: "GET",
+//         headers: { Authorization: "Bearer " + token },
+//       }
+//     );
+//     const data = await result.json();
+//     return data.items;
+//   };
 
-  const _getNewTracks = async (token) => {
-    const limit = 20;
+//   const _getNewTracks = async (token) => {
+//     const limit = 20;
 
-    const result = await fetch(
-      `https://api.spotify.com/v1/playlists/37i9dQZF1DWSt89CX9de4L`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "applicaiton/json",
-          Authorization: "Bearer " + token,
-        },
-      }
-    );
-    const data = await result.json();
-    return data.tracks.items;
-  };
+//     const result = await fetch(
+//       `https://api.spotify.com/v1/playlists/37i9dQZF1DWSt89CX9de4L`,
+//       {
+//         method: "GET",
+//         headers: {
+//           "Content-Type": "application/json",
+//           Accept: "applicaiton/json",
+//           Authorization: "Bearer " + token,
+//         },
+//       }
+//     );
+//     const data = await result.json();
+//     return data.tracks.items;
+//   };
 
-  return {
-    getToken() {
-      return _getToken();
-    },
-    getFeaturedTracks() {
-      return _getFeaturedTracks();
-    },
-    getPlaylistByGenre() {
-      return _getPlaylistByGenre();
-    },
-    getGenres() {
-      return _getGenres();
-    },
-    getSearch(token, searchTerm) {
-      return _getSearch(token, searchTerm);
-    },
-    getRecommendations(token, seedTracks) {
-      return _getRecommendations(token, seedTracks);
-    },
-    getPopularTracks(token) {
-      return _getPopularTracks(token);
-    },
-    getPlaylistsWithSong(token, seedTrack) {
-      return _getPlaylistsWithSong(token, seedTrack);
-    },
-    getNewTracks(token) {
-      return _getNewTracks(token);
-    },
-  };
-})();
+//   return {
+//     getToken() {
+//       return _getToken();
+//     },
+//     getFeaturedTracks() {
+//       return _getFeaturedTracks();
+//     },
+//     getPlaylistByGenre() {
+//       return _getPlaylistByGenre();
+//     },
+//     getGenres() {
+//       return _getGenres();
+//     },
+//     getSearch(token, searchTerm) {
+//       return _getSearch(token, searchTerm);
+//     },
+//     getRecommendations(token, seedTracks) {
+//       return _getRecommendations(token, seedTracks);
+//     },
+//     getPopularTracks(token) {
+//       return _getPopularTracks(token);
+//     },
+//     getPlaylistsWithSong(token, seedTrack) {
+//       return _getPlaylistsWithSong(token, seedTrack);
+//     },
+//     getNewTracks(token) {
+//       return _getNewTracks(token);
+//     },
+//   };
+// })();
 
 const UIController = (function () {
   const DOMElements = {

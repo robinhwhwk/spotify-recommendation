@@ -13,7 +13,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 
-sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials())
+sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(), requests_timeout=10, retries=10)
 
 
 # def play_audio(preview_url):

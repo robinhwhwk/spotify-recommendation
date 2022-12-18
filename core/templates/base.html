@@ -15,13 +15,16 @@
     <!-- Add additional CSS in static file -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <script src="{% static 'js/audio.js' %}"></script>
   </head>
   <body>
           {% block sidebar %}
           <div class="navbar">
-            <li><a href="{% url 'index' %}">Home</a></li>
-            <li><a href="{% url 'popular' %}">Popular Songs</a></li>
-            <li><a href="{% url 'recommendation' %}">Similar Songs</a></li>
+            <ul>
+              <li><a href="{% url 'index' %}">Home</a></li>
+              <li><a href="{% url 'popular' %}">Popular Songs</a></li>
+              <li><a href="{% url 'recommendation' %}">Similar Songs</a></li>
+            </ul>
           </div>
           <hr />
           {% endblock %}

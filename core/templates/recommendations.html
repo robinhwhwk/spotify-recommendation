@@ -6,11 +6,13 @@
 </head>
 <body>
     <div class="container">
-        <header class="text-left">Similar Songs Generator</header>
-        <form action="{% url 'searchtracks' %}" method="get">
-            <input name="q" type="text" placeholder="Search..." />
-            </form>
-        <button type="reset" id="btn_submit">Search</button>        
+        <header>Similar Songs Generator</header>
+        <div class="search_wrapper">
+            <form action="{% url 'searchtracks' %}" method="get">
+                <input name="q" type="text" placeholder="Search..." />
+                </form>
+            <button type="reset" id="btn_submit">Search</button>        
+        </div>
         {% if tracks %}
             {% for track in tracks %}
             <div class="song-cards">

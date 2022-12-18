@@ -7,35 +7,33 @@
 <body>
     <div class="container">
         <header class="text-left">Top 50 Japan</header>
-        {% if items %}
-        <div class="song-cards">
-            {% for track in items %}
-            <div>
-                <p>{{ forloop.counter }}. {{ track.track.name }} by {{ track.track.artists.0.name }}</p>
+            {% if items %}
+                {% for track in items %}
+                <div class="song-cards">
+                    <p>{{ forloop.counter }}. {{ track.track.name }} by {{ track.track.artists.0.name }}</p>
 
-                <img src="{{ track.track.album.images.0.url }}" alt="" height="100" width="100">
+                    <img src="{{ track.track.album.images.0.url }}" alt="" height="100" width="100">
 
-                <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.track.preview_url }}")' value="" title="Play a preview">
+                    <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.track.preview_url }}")' value="" title="Play a preview">
 
-                <a href="{{ track.track.external_urls.spotify }}" target="_blank"><button class="spotifybutton bottom right"></button></a>
-            {% endfor %}
-        {% endif %}
-        {% if tracks %}
-        {% for track in tracks %}
-        <div>
-            <p class="text-left">{{ forloop.counter }}. {{ track.name }} by {{ track.artist }}</p>
-            <div class="grid-container">
-                <img src="{{ track.image_url }}" alt="" height="100" width="100">
-                <div>
-                    <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
-
-                    <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton bottom right"></button></a>
+                    <a href="{{ track.track.external_urls.spotify }}" target="_blank"><button class="spotifybutton bottom right"></button></a>
                 </div>
-            </div>
+                {% endfor %}
+            {% endif %}
+            {% if tracks %}
+                {% for track in tracks %}
+                <div class="song-cards">
+                <p class="text-left">{{ forloop.counter }}. {{ track.name }} by {{ track.artist }}</p>
+                    <div class="grid-container">
+                        <img src="{{ track.image_url }}" alt="" height="100" width="100">
+                        <div>
+                            <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
 
-        </div>
-        {% endfor %}
-        {% endif %}
-        </div>
+                            <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton bottom right"></button></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
     </div>
 {% endblock %}

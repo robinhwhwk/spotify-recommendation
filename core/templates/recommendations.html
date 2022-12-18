@@ -6,38 +6,25 @@
 </head>
 <body>
     <div class="container">
-        <header>Similar Songs Generator</header>
-        <div class="search-wrapper">
-            <form id="search_bar" action="" autocomplete="off">
-                <input type="hidden" id="hidden_token">
-                <input type="text" placeholder="Type a song name" name="search" data-search>
+        <header class="text-left">Similar Songs Generator</header>
+        <form action="{% url 'searchtracks' %}" method="get">
+            <input name="q" type="text" placeholder="Search..." />
             </form>
-            <button type="submit" id="btn_submit">Generate</button>
-            <!-- selected songs-->
-            <div id="selected_songs">
-                <template data-selected-songs-template>
-                    <span class="label">
-                        
-                    </span>
-                </template>
+        <button type="reset" id="btn_submit">Search</button>        
+        {% if tracks %}
+            {% for track in tracks %}
+            <div class="song-cards">
+                    <p class="text-left">{{ track.name }} by {{ track.artists.0.name }}</p>
+                <div class="grid-container">
+                    <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
+                    <div>
+                        <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
+
+                        <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton bottom right" title="Open in Spotify"></button></a>
+                    </div>
+                </div>
             </div>
-        </div>
-        <!--Searched Songs-->
-        <div id="search-cards" data-song-card-container>
-            <template data-song-template>
-                <span class="card">
-                </span>
-            </template>
-        </div>
-        <!-- Resulting Songs-->
-        <div id="recommendations" class="inactive" data-rec-container>
-            <template data-recommendations>
-                <span class="card">
-                    <a href=""><img src="" alt="" height="100px" width="100px"></a>
-                    <div></div>
-                    <span></span>
-                </span>
-            </template>
-        </div>
+            {% endfor %}
+        {% endif %}
     </div>
     {% endblock %} 

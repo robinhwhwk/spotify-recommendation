@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.views import View
 from django.urls import reverse
 from django.db.models import Q  # for queries
+from datetime import date
 from .apis import *
 from .spotify import *
 from .models import *
@@ -22,13 +23,27 @@ class IndexView(View):
 class PopularView(View):
 
     playlist_id = '37i9dQZEVXbKXQ4mDTEBXq'
+    current_date = date.today()
 
     def get(self, request):
+        # Playlist was updated in the last day
+        if Playlists.objects.filter(id=self.playlist_id, last_updated=self.current_date).exists():
+            playlist = Playlists.objects.filter(id=self.playlist_id, last_updated=self.current_date)[0].tracks.all()
+            context = {
+                'tracks' : playlist,
+            }
+            print(1)
+            return render(request, 'popular.html', context=context)
+
+        pl = Playlists(self.playlist_id, self.current_date)
+        pl.save()
+
         playlist = sp.playlist(self.playlist_id)
         playlist = playlist['tracks']['items']
-        save_playlist(playlist)
+        save_playlist(playlist, self.playlist_id)
+        print(2)
         context = {
-            'playlist' : playlist,
+            'items' : playlist,
         }
 
         return render(request, 'popular.html', context=context)
@@ -36,5 +51,15 @@ class PopularView(View):
 class RecommendationView(View):
 
     def get(self, request):
-
         return render(request, 'recommendations.html')
+
+class SearchTracksView(View):
+
+    def get(self, request):
+        query = self.request.GET.get('q')
+        tracks = search_tracks(query)
+        context = {
+            'tracks': tracks,
+        }
+        return render(request, 'recommendations.html', context=context)
+

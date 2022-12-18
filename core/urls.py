@@ -9,4 +9,5 @@ urlpatterns = [
     path('index/', views.IndexView.as_view(), name='index'),
     path('popular/', views.PopularView.as_view(), name='popular'),
     path('recommendation/', views.RecommendationView.as_view(), name='recommendation'),
+    path('recommendation/search', views.SearchTracksView.as_view(), name='searchtracks')
 ]

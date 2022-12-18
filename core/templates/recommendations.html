@@ -1,6 +1,9 @@
 {% extends "base.html" %} 
 {% block title %}
 <title>J-pop Recommender</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% load static %}
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %} 
 {% block content %}
 </head>
@@ -8,11 +11,12 @@
     <div class="container">
         <header>Similar Songs Generator</header>
         <div class="search_wrapper">
-            <form action="{% url 'searchtracks' %}" method="get">
-                <input name="q" type="text" placeholder="Search..." />
+            <form action="" method="get">
+                <input name="q" type="text" id="search-field" onkeyup="search()" placeholder="Search..." />
                 </form>
             <button type="reset" id="btn_submit">Search</button>        
         </div>
+        <div id="search-results">
         {% if tracks %}
             {% for track in tracks %}
             <div class="song-cards">
@@ -28,5 +32,6 @@
             </div>
             {% endfor %}
         {% endif %}
+        </div>
     </div>
     {% endblock %} 

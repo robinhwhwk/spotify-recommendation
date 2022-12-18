@@ -11,6 +11,7 @@ from datetime import date
 from .apis import *
 from .spotify import *
 from .models import *
+import json
 
 # Create your views here.
 
@@ -56,8 +57,16 @@ class RecommendationView(View):
 
 class SearchTracksView(View):
 
-    def get(self, request):
-        query = self.request.GET.get('q')
+    def post(self, request, query):
+        if request.is_ajax():
+            results = search_tracks(request.POST.get('q'))
+            save_tracks(results)
+            context = {
+                'tracks': results,
+            }
+            
+            return HttpResponse(json.dumps(context), content_type='application/json')
+        query = self.request.POST.get('q')
         tracks = search_tracks(query)
         save_tracks(tracks)
         context = {

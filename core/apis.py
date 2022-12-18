@@ -1,6 +1,5 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from .constants import *
 
 
 import os
@@ -54,6 +53,6 @@ def youtube_search(query):
 def search_tracks(query):
     if not query: 
         return
-    results = sp.search(query, 20, type='track')
+    results = sp.search(query, 10, type='track')
     results = results['tracks']['items']
     return results

@@ -16,10 +16,14 @@ import json
 # Create your views here.
 
 class IndexView(View):
-
+    moods = ['Happy', 'Sad', 'Angry', 'Relaxed', 'Bored', 'Nostalgic', 'Anxious', 'Lonely']
+    
     def get(self, request):
-
-        return render(request, 'index.html')
+        # return the list of tracks based on moods 
+        context = {
+            'moods': self.moods,
+        }
+        return render(request, 'index.html', context=context)
 
 class PopularView(View):
 
@@ -33,6 +37,7 @@ class PopularView(View):
             context = {
                 'tracks' : playlist,
             }
+            print(1)
             return render(request, 'popular.html', context=context)
 
         pl = Playlists(self.playlist_id, self.current_date)
@@ -41,6 +46,7 @@ class PopularView(View):
         playlist = sp.playlist(self.playlist_id)
         playlist = playlist['tracks']['items']
         save_playlist(playlist, self.playlist_id)
+        print(2)
         context = {
             'items' : playlist,
         }

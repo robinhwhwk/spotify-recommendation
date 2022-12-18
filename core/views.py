@@ -16,13 +16,10 @@ import json
 # Create your views here.
 
 class IndexView(View):
-    moods = ['Happy', 'Sad', 'Angry', 'Relaxed', 'Bored', 'Nostalgic', 'Anxious', 'Lonely']
+
     def get(self, request):
-        # return the list of tracks based on moods 
-        context = {
-            'moods': self.moods,
-        }
-        return render(request, 'index.html', context=context)
+
+        return render(request, 'index.html')
 
 class PopularView(View):
 
@@ -83,4 +80,3 @@ class MoodTracksView(View):
             'tracks': tracks,
         }
         return render(request, 'moodtracks.html', context=context)
-

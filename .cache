@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"access_token": "BQCxNLpQZrg9zYaRGw_QBLDekKbYy6HmMcmGlJEg9XV0pn4kUyRBjYhcLNHi9sB5zubv2tZDkXUS4vzqB7_g-OZc245ZtYSctwsbIRZHn22u_QDG33Y", "token_type": "Bearer", "expires_in": 3600, "expires_at": 1671394216}
+=======
+{"access_token": "BQB4cTGYM_8QkL4OQUo7cXGaKoqVVA6MMG-mPTJk4yhon7nIPLCHnojv6Z1PEICMlkNTS_MhsNuf80pROs8S_ctC6kmSeBzh2Y6l4uRedOha1qOCkKA", "token_type": "Bearer", "expires_in": 3600, "expires_at": 1671335947}
+>>>>>>> parent of a7aebea (Recommendation based on mood selection)

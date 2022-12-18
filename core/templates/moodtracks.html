@@ -1,0 +1,30 @@
+{% extends "base.html" %} 
+{% block title %}
+<title>J-pop Recommender</title>
+{% endblock %} 
+{% block content %}
+</head>
+<body>
+    <div class="container">
+        <header>Songs Generated Based on Your Mood</header>
+        {% if tracks %}
+            {% for track in tracks %}
+            <div class="song-cards">
+                    <p class="text-left">{{ track.name }} by {{ track.artists.0.name }}</p>
+                <div class="grid-container">
+                    <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
+                    <div>
+                        {% if track.preview_url %}
+                        <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
+                        {% else %}
+                        {% load static %}
+                        <div class="nabutton bottom"></div>
+                        {% endif %}
+                        <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton bottom right" title="Open in Spotify"></button></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% endblock %} 

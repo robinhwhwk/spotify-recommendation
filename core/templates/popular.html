@@ -26,10 +26,26 @@
                 <p class="text-left">{{ forloop.counter }}. {{ track.name }} by {{ track.artist }}</p>
                     <div class="grid-container">
                         <img src="{{ track.image_url }}" alt="" height="100" width="100">
-                        <div>
+                        <div class="button-container">
+                            {% if track.preview_url %}
+                            <div>
                             <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
-
-                            <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton bottom right"></button></a>
+                            </div>
+                            {% else %}
+                            {% load static %}
+                            <div class="nabutton bottom"></div>
+                            {% endif %}
+                            <div>
+                            <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>
+                            </div>
+                            {% if track.youtube_link %}
+                            <div>
+                            <a href="{{ track.youtube_link }}" target="_blank"><button class="youtubebutton"></button></a>
+                            </div>
+                            {% else %}
+                            {% load static %}
+                            <div class="nabutton left"></div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

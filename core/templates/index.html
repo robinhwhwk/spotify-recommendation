@@ -7,16 +7,21 @@
         <header>J-Pop Song Recommender</header>
         <p>J-pop Song Recommender is a tool for getting recommendations based on your favorite songs.</p>
         <p> You can naviage to Similar Songs Finder to search for songs.</p>
-        <p> Here are some of the newest J-pop releases.</p>
+        <p> You can also have us generate J-Pop playlists for you based on your mood.</p>
     </div>
     <div class="container">
         <input type="hidden" id="hidden_token">
-        <header>New Releases Japan</header>
-        <div id="song-cards" data-song-card-container>
-            <template data-song-template>
-                <span class="card">
-                </span>
-            </template>
+        <header>How Are You Feeling?</header>
+        {% if moods %}
+        <div class="grid">
+            {% for mood in moods %}
+                <div class="mood">
+                    <a href="{% url 'moodtracks' mood  %}">
+                        <p class="{{mood}}">{{mood}}</p>
+                    </a>
+                </div>
+            {% endfor %}
         </div>
+        {% endif %}
     </div>
 {% endblock %}

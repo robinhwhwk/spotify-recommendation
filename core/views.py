@@ -58,6 +58,7 @@ class SearchTracksView(View):
     def get(self, request):
         query = self.request.GET.get('q')
         tracks = search_tracks(query)
+        save_tracks(tracks)
         context = {
             'tracks': tracks,
         }

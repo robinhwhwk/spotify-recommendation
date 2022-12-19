@@ -30,12 +30,11 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 api_service_name = "youtube"
 api_version = "v3"
-client_secrets_file = "YOUR_CLIENT_SECRET_FILE.json"
 
 # Get credentials and create an API client
 
 youtube = googleapiclient.discovery.build(
-    api_service_name, api_version, developerKey=env("YOUTUBE_KEY"))
+    api_service_name, api_version, developerKey=env("YT_KEY_2"))
 
 def youtube_search(query):
     request = youtube.search().list(

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.template import loader
 from django.shortcuts import render
 from django.views import View
@@ -12,6 +13,7 @@ from .apis import *
 from .spotify import *
 from .models import *
 import json
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 # Create your views here.
 
@@ -78,3 +80,31 @@ class MoodTracksView(View):
             'tracks': tracks,
         }
         return render(request, 'moodtracks.html', context=context)
+
+@csrf_protect
+def youtube(request):
+    if request.method == 'POST':
+        body = json.loads(request.body)
+        if not body:
+            return JsonResponse({'video_id' : 'None'})
+        title = body['title']
+        artist = body['artist']
+        query = title + ' ' + artist
+        if Songs.objects.filter(name=title, artist=artist).exists():
+            song = Songs.objects.filter(name=title, artist=artist).all()[0]
+            if len(song.youtube_link)>35:
+                return JsonResponse({'video_id': song.youtube_link[32:]})
+            else:
+                youtube_response = youtube_search(query=query)
+                video_id = youtube_response['items'][0]['id']['videoId']
+                song.youtube_link = video_id
+                song.save()
+
+                # Return the video ID as the response
+                return JsonResponse({'video_id': video_id})
+        else:
+            youtube_response = youtube_search(query=query)
+            video_id = youtube_response['items'][0]['id']['videoId']
+
+            # Return the video ID as the response
+            return JsonResponse({'video_id': video_id})

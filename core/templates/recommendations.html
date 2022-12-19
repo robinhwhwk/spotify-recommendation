@@ -11,22 +11,30 @@
     <div class="container">
         <header>Similar Songs Generator</header>
         <div class="search_wrapper">
-            <form action="" method="get">
-                <input name="q" type="text" id="search-field" onkeyup="search()" placeholder="Search..." />
+            <form action="{% url 'searchtracks' %}" method="get">
+                <input name="q" type="text" id="search-field" placeholder="Search..." />
                 </form>
             <button type="reset" id="btn_submit">Search</button>        
         </div>
         <div id="search-results">
-        {% if tracks %}
+            {% if tracks %}
             {% for track in tracks %}
             <div class="song-cards">
-                    <p class="text-left">{{ track.name }} by {{ track.artists.0.name }}</p>
+            <p class="text-left">{{ forloop.counter }}. {{ track.name }} - {{ track.artists.0.name }}</p>
                 <div class="grid-container">
                     <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
-                    <div>
+                    <div class="button-container">
+                        {% if track.preview_url %}
+                        <div>
                         <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
-
-                        <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton bottom right" title="Open in Spotify"></button></a>
+                        </div>
+                        {% else %}
+                        {% load static %}
+                        <div class="nabutton bottom"></div>
+                        {% endif %}
+                        <div>
+                        <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
+                        </div>
                     </div>
                 </div>
             </div>

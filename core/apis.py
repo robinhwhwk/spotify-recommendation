@@ -36,7 +36,7 @@ api_version = "v3"
 youtube = googleapiclient.discovery.build(
     api_service_name, api_version, developerKey=env("YT_KEY_2"))
 
-def youtube_search(query):
+def search_youtube(query):
     request = youtube.search().list(
         part="snippet",
         maxResults=1,
@@ -49,9 +49,24 @@ def youtube_search(query):
         return None
 
 
-def search_tracks(query):
+def search_spotify(query, type='track'):
     if not query: 
         return
-    results = sp.search(query, 10, type='track')
-    results = results['tracks']['items']
+    if type=='genre':
+        return get_genre_seeds(query)
+    results = sp.search(query, 5, type=type)
+    type = type + 's'
+    results = results[type]['items']
     return results
+
+def get_genre_seeds(query):
+    if not query:
+        return
+    results = sp.recommendation_genre_seeds()
+    results = results['genres']
+    genres = []
+    for genre in results:
+        if query.lower() in genre.lower():
+            genres.append(genre)
+    return genres
+    

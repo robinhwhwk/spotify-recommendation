@@ -64,10 +64,19 @@ class SearchTracksView(View):
 
     def get(self, request):
 
+        # The type for results is one of track, artist, or genre
+        
         query = self.request.GET.get('q')
-        tracks = search_tracks(query)
+        type = self.request.GET.get('type')
+
+        if not type:
+            type = 'track'
+        results = search_spotify(query, type)
+
+        type = type + 's'
+        
         context = {
-            'tracks': tracks,
+            type: results,
         }
         return render(request, 'recommendations.html', context=context)
 
@@ -95,7 +104,7 @@ def youtube(request):
             if song.youtube_link:
                 return JsonResponse({'video_id': song.youtube_link})
             else:
-                youtube_response = youtube_search(query=query)
+                youtube_response = search_youtube(query=query)
                 video_id = youtube_response['items'][0]['id']['videoId']
                 song.youtube_link = video_id
                 song.save()
@@ -103,7 +112,7 @@ def youtube(request):
                 # Return the video ID as the response
                 return JsonResponse({'video_id': video_id})
         else:
-            youtube_response = youtube_search(query=query)
+            youtube_response = search_youtube(query=query)
             video_id = youtube_response['items'][0]['id']['videoId']
 
             # Return the video ID as the response

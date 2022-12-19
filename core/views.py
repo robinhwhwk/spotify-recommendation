@@ -92,8 +92,8 @@ def youtube(request):
         query = title + ' ' + artist
         if Songs.objects.filter(name=title, artist=artist).exists():
             song = Songs.objects.filter(name=title, artist=artist).all()[0]
-            if len(song.youtube_link)>35:
-                return JsonResponse({'video_id': song.youtube_link[32:]})
+            if song.youtube_link:
+                return JsonResponse({'video_id': song.youtube_link})
             else:
                 youtube_response = youtube_search(query=query)
                 video_id = youtube_response['items'][0]['id']['videoId']

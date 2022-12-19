@@ -25,14 +25,9 @@
                         <div>
                         <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
                         </div>
-                        {% if track.youtube_link %}
-                        <div>
-                        <a href="{{ track.youtube_link }}" target="_blank"><button class="youtubebutton"></button></a>
-                        </div>
-                        {% else %}
-                        {% load static %}
-                        <div class="nabutton left"></div>
-                        {% endif %}
+                        <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artists.0.name }}" method="post">
+                            {% csrf_token %}
+                        </form>
                     </div>
                 </div>
             </div>

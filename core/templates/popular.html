@@ -11,20 +11,21 @@
             {% if items %}
                 {% for track in items %}
                 <div class="song-cards">
-                    <p>{{ forloop.counter }}. {{ track.track.name }} - {{ track.track.artists.0.name }}</p>
+                    <p class="text-left">{{ forloop.counter }}. {{ track.track.name }} - {{ track.track.artists.0.name }}</p>
 
                     <div class="grid-container">
                         <img src="{{ track.track.album.images.0.url }}" alt="" height="100" width="100">
                         <div class="button-container">
-                            {% if track.preview_url %}
+                            {% if track.track.preview_url %}
                             <div>
                             <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.track.preview_url }}")' value="" title="Play a preview">
                             </div>
                             {% else %}
+                            {% load static %}
                             <div class="nabutton bottom"></div>
                             {% endif %}
                             <div>
-                            <a href="{{ track.track.external_urls.spotify }}" target="_blank"><button class="spotifybutton bottom right"></button></a>
+                            <a href="{{ track.track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
                             </div>
                             <form class="youtubebutton" data-title="{{ track.track.name }}" data-artist="{{ track.track.artists.0.name }}" method="post">
                             {% csrf_token %}
@@ -53,7 +54,6 @@
                             <div>
                             <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>
                             </div>
-                            {% load static %}
                             <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artist }}" method="post">
                             {% csrf_token %}
                             </form>

@@ -88,7 +88,39 @@ window.onload = ()=> {
       })
     }
 
-    
+    const songcards = document.querySelectorAll('.song-cards')
+
+    if ('content' in document.createElement('template')) {
+      if (songcards) {
+        songcards.forEach(songcard => {
+          songcard.addEventListener('click', async (e) => {
+            console.log('in template');
+            // get the value of the search type
+            const searchtype = songcard.dataset.isTrack
+            const seedlist = document.querySelector('.seed-list')
+            const template = document.querySelector('#search-keyword')
+            const clone = template.content.cloneNode(true);
+
+            clone.dataset.isTrack = searchtype;
+
+            if (searchtype == 'track') {
+              clone.dataset.nameTrack = songcard.dataset.nameTrack;
+              clone.dataset.nameArtist = songcard.dataset.nameArtist;
+              clone.dataset.trackId = songcard.dataset.trackId;
+              clone.dataset.artistId = songcard.dataset.artistId;
+            }
+            if (searchtype == 'artist') {
+              clone.dataset.nameArtist = songcard.dataset.nameArtist;
+              clone.dataset.artistId = songcard.dataset.artistId;
+            }
+            if (searchtype == 'genre') {
+              clone.dataset.nameGenre = songcard.dataset.nameGenre;
+            }
+            seedlist.appendChild(clone);
+          })
+        })
+      }
+    }   
 }
 
 window.addEventListener('click', (e) => {
@@ -112,8 +144,45 @@ window.addEventListener('click', (e) => {
         searchresults.classList.add('inactive');
       }
     }
-});
 
+    const songcards = document.querySelectorAll('.song-cards')
+
+    songcards.forEach(songcard => {
+      if (songcard.contains(e.target)) {
+      // get the value of the search type
+      const searchtype = songcard.dataset.isTrack
+      const seedlist = document.querySelector('.seed-list')
+      if (seedlist.childElementCount < 6) {
+        const template = document.querySelectorAll('template')[0]
+        const div = template.content.querySelector('div')
+        const clone = document.importNode(div, true);
+
+        clone.dataset.isTrack = searchtype;
+
+        if (searchtype == 'track') {
+          clone.dataset.nameTrack = songcard.dataset.nameTrack;
+          clone.dataset.nameArtist = songcard.dataset.nameArtist;
+          clone.dataset.trackId = songcard.dataset.trackId;
+          clone.dataset.artistId = songcard.dataset.artistId;
+
+          clone.textContent = clone.dataset.nameTrack + '-' + clone.dataset.nameArtist;
+        }
+        if (searchtype == 'artist') {
+          clone.dataset.nameArtist = songcard.dataset.nameArtist;
+          clone.dataset.artistId = songcard.dataset.artistId;
+
+          clone.textContent = clone.dataset.nameArtist;
+        }
+        if (searchtype == 'genre') {
+          clone.dataset.nameGenre = songcard.dataset.nameGenre;
+
+          clone.textContent = clone.dataset.nameGenre;
+        }
+        seedlist.appendChild(clone);
+      } 
+    }
+  })   
+});
 
 
 function delay(milliseconds){

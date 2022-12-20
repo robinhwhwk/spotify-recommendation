@@ -9,15 +9,21 @@
     <div class="container">
         <div class="search-container">
         <header>Similar Songs Generator</header>
-        <div class="seed-list"data-track-list='[]', data-artist-list='[]', data-genre-list="[]" ></div>
+        <p>Select up to 5 combinations of songs, artists, and genres.</p>
+        <div class="seed-list"> 
+            <template>
+                <div id="search-keyword" data-is-track="", data-name-track="", data-name-artist="",
+                data-track-id="", data-artist-id="", data-genre-name=""></div>
+            </template>
+        </div>
         <div class="search_wrapper">
             <div class="child">
-                <form class="search-form" action="{% url 'searchtracks' %}" method="get" autocomplete="off">
-                    <input name="q" type="text" id="search-field" placeholder="Search..." />
-                </form>
+                <!-- <form class="search-form" action="{% url 'searchtracks' %}" method="get" autocomplete="off"> -->
+                    <input class="search-form" name="q" type="text" id="search-field" placeholder="Search..." />
+                <!-- </form> -->
             </div>
             <div class="dropdown child">
-                <button class="dropbtn">Song</button>
+                <button name="dropdownbtn" class="dropbtn">Song</button>
                 <div id="myDropdown" class="dropdown-content" data-type="track">
                   <a data-type="track">Song</a>
                   <a data-type="artist">Artist</a>
@@ -31,7 +37,8 @@
         <div id="search-results" data-returned="false">
             {% if tracks %}
             {% for track in tracks %}
-            <div class="song-cards">
+            <div name="songcard" class="song-cards" data-is-track="track", data-name-track="{{ track.name }}", data-name-artist="{{ track.artists.0.name }}", 
+            data-track-id="{{ track.id }}", data-artist-id="{{ track.artists.0.id }}">
                 <div class="grid-container">
                     <div class="child">
                         <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
@@ -45,7 +52,8 @@
         {% endif %}
         {% if artists %}
             {% for artist in artists %}
-            <div class="song-cards">
+            <div class="song-cards" data-is-track="artist", data-name-artist="{{ artist.name }}", 
+            data-artist-id="{{ artist.id }}">
                 <div class="grid-container">
                     <div class="child">
                         <img src="{{ artist.images.0.url }}" alt="" height="100" width="100">
@@ -59,7 +67,7 @@
         {% endif %}
         {% if genres %}
             {% for genre in genres %}
-            <div class="song-cards">
+            <div class="song-cards" data-is-track="genre", data-name-genre="{{ genre }}">
                 <div class="grid-container">
                     <div class="child center">
                     <p>{{ genre }}</p>

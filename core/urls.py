@@ -12,4 +12,5 @@ urlpatterns = [
     path('recommendation/search/', views.SearchTracksView.as_view(), name='recommendation'),
     path('recommendation/search/', views.SearchTracksView.as_view(), name='searchtracks'),
     path('moods/<str:mood>', views.MoodTracksView.as_view(), name='moodtracks'),
+    path('recommendation/tracks', views.SearchTracksView.as_view(), name='recommendtracks'),
 ]

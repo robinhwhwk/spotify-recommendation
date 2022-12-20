@@ -1,9 +1,10 @@
 To Do:
     Recommend System:
         ✔ Make a rolling search @done (12/19/2022, 3:43:47 AM)
-        ☐ Make boxes for seed tracks
-        ☐ When you click on the song cards, add it to the seed list
+        ✔ Make boxes for seed tracks @done (12/20/2022, 2:48:07 AM)
+        ✔ When you click on the song cards, add it to the seed list @done (12/20/2022, 2:48:14 AM)
         ☐ When you click on an artist name, go to their page
+        ☐ Make recommendation based on seeds work
     Catalogue:
         ☐ Keep a catalogue of artists
         ☐ Optional: Keep a catalogue of songs 

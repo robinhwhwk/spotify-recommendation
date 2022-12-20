@@ -152,12 +152,17 @@ window.addEventListener('click', (e) => {
       // get the value of the search type
       const searchtype = songcard.dataset.isTrack
       const seedlist = document.querySelector('.seed-list')
-      if (seedlist.childElementCount < 6) {
+      const numseeds = document.querySelectorAll('#search-keyword').length;
+      if (numseeds < 5) {
         const template = document.querySelectorAll('template')[0]
         const div = template.content.querySelector('div')
+        const span  = template.content.querySelector('span')
         const clone = document.importNode(div, true);
+        const xbutton = document.importNode(span, true)
 
         clone.dataset.isTrack = searchtype;
+        clone.dataset.seedIndex = numseeds;
+        xbutton.dataset.seedIndex = numseeds;
 
         if (searchtype == 'track') {
           clone.dataset.nameTrack = songcard.dataset.nameTrack;
@@ -166,19 +171,38 @@ window.addEventListener('click', (e) => {
           clone.dataset.artistId = songcard.dataset.artistId;
 
           clone.textContent = clone.dataset.nameTrack + '-' + clone.dataset.nameArtist;
+
+          xbutton.dataset.trackId = songcard.dataset.trackId;
+
+          xbutton.addEventListener('click', ()=> {
+             removeSeed(trackId=songcard.dataset.trackId);
+          });
         }
         if (searchtype == 'artist') {
           clone.dataset.nameArtist = songcard.dataset.nameArtist;
           clone.dataset.artistId = songcard.dataset.artistId;
 
           clone.textContent = clone.dataset.nameArtist;
+
+          xbutton.dataset.artistId = songcard.dataset.artistId;
+
+          xbutton.addEventListener('click', ()=> {
+            removeSeed(artistId=songcard.dataset.artistId);
+          });
         }
         if (searchtype == 'genre') {
           clone.dataset.nameGenre = songcard.dataset.nameGenre;
 
           clone.textContent = clone.dataset.nameGenre;
+
+          xbutton.dataset.nameGenre == songcard.dataset.nameGenre;
+
+          xbutton.addEventListener('click', ()=> {
+            removeSeed(genre=songcard.dataset.nameGenre);
+          });
         }
         seedlist.appendChild(clone);
+        seedlist.appendChild(xbutton);
       } 
     }
   })   
@@ -201,3 +225,24 @@ function showSuggestions() {
   document.getElementById("search-results").classList.toggle("show");
 }
 
+function removeSeed(trackId=null, artistId=null, genre=null) {
+  if (trackId) {
+    const seed = document.querySelector(`#search-keyword[data-track-id="${trackId}`);
+    const xbutton = document.querySelector(`#seed-remover[data-track-id="${trackId}`);
+    seed.remove();
+    xbutton.remove();
+    
+  }
+  if (artistId) {
+    const seed = document.querySelector(`#search-keyword [data-artist-id="${artistId}`);
+    const xbutton = document.querySelector(`#seed-remover[data-artist-id="${artistId}`);
+    seed.remove();
+    xbutton.remove();
+  }
+  if (genre) {
+    const seed = document.querySelector(`#search-keyword [data-name-genre="${genre}`);
+    const xbutton = document.querySelector(`#seed-remover[data-name-genre="${genre}`);
+    seed.remove();
+    xbutton.remove();
+  }
+}

@@ -12,15 +12,15 @@
         <p>Select up to 5 combinations of songs, artists, and genres.</p>
         <div class="seed-list"> 
             <template>
-                <div id="search-keyword" data-is-track="", data-name-track="", data-name-artist="",
-                data-track-id="", data-artist-id="", data-genre-name=""></div>
+                <div id="search-keyword" data-seed-index="" data-is-track="", data-name-track="", data-name-artist="",
+                data-track-id="", data-artist-id="", data-genre-name="">
+            </div>
+            <span id="seed-remover" data-seed-index="" data-track-id="" data-artist-id="" data-genre-name="">X</span>
             </template>
         </div>
         <div class="search_wrapper">
             <div class="child">
-                <!-- <form class="search-form" action="{% url 'searchtracks' %}" method="get" autocomplete="off"> -->
-                    <input class="search-form" name="q" type="text" id="search-field" placeholder="Search..." />
-                <!-- </form> -->
+                <input class="search-form" name="q" type="text" id="search-field" placeholder="Search..." autocomplete="off">
             </div>
             <div class="dropdown child">
                 <button name="dropdownbtn" class="dropbtn">Song</button>

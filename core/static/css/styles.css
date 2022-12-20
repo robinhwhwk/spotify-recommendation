@@ -493,14 +493,12 @@ input.search-form {
   padding: .1rem;
   margin: .1rem;
 }
-/* #search-keyword[data-is-track="track"]>div::before{
-  content: attr(data-name-track) '-' attr(data-name-artist)'';
-}
 
-#search-keyword[data-is-track="artist"]::before{
-  content: attr(data-name-artist)'';
+#seed-remover {
+  font-size: .8rem;
+  font-weight: 900;
+  padding: .1rem;
+  margin: .1rem .3rem .1rem 0rem;
+  border: .06rem solid #7e7c7c;
+  cursor: pointer;
 }
-
-#search-keyword[data-is-track="genre"]::before{
-  content: attr(data-name-genre)'';
-} */

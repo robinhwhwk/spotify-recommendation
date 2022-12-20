@@ -31,10 +31,6 @@ body {
   height: 100%;
 }
 
-img {
-  margin: .5rem;
-}
-
 
 input {
   font-size: 1rem;
@@ -43,10 +39,10 @@ input {
 .song-cards {
   display: grid;
   align-items: center;
-  border: 1px solid #7e7c7c;
-  border-bottom: 0px;
+  border: .06rem solid #7e7c7c;
+  border-bottom: 0;
   background-color: white;
-  width: 35rem;
+  width: 90%;
   height: fit-content;
 }
 
@@ -63,7 +59,7 @@ input {
   margin: 0;
   width: 100%;
   padding: 1rem;
-  border: 1px solid #7e7c7c;
+  border: .06rem solid #7e7c7c;
   flex-grow: 1;
 }
 
@@ -117,7 +113,7 @@ input {
 .label {
   max-width: fit-content;
   height: 1.25rem; /* 20px converted to rem */
-  border: 1px solid 7e7c7c;
+  border: .06rem solid 7e7c7c;
   background-color: white;
   padding: 0.5rem;
   font-size: 0.8rem;
@@ -243,6 +239,29 @@ header {
   .navbar .search-container button {
     width: 100%;
   }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(184, 227, 153);
+    
+  }
+  img {
+    margin: .2rem;
+  }
+  p {
+    margin: .2rem;
+  }
+  #search-results .song-cards {
+    margin-left: 3rem;
+    width: 20rem;
+  }
+  .search_wrapper {
+    margin-left: 4rem;
+    width: 20rem;
+  }
+  
 }
 .Happy {
   background: url(images/Happy.png) no-repeat;
@@ -356,6 +375,11 @@ header {
   width: 80%;
   height: 80%;
 }
+
+img {
+  width: 4rem;
+  height: 4rem;
+}
 .mood {
   position: relative;
   text-align: center;
@@ -367,6 +391,20 @@ header {
   .grid {
     grid-template-columns: 47.5% 47.5%;
     gap: 2.5rem;
+  }
+
+  .song-cards {
+    width: 35rem;
+  }
+
+  img {
+    width: 6.6rem;
+    height: 6.6rem;
+    margin: .5rem;
+  }
+  
+  p {
+    margin: .5rem;
   }
 }
 
@@ -384,7 +422,7 @@ header {
   padding: 16px;
   width: 100%;
   font-size: 16px;
-  border: 1px solid #7e7c7c;
+  border: .06rem solid #7e7c7c;
   cursor: pointer;
   margin: 0;
 }
@@ -405,7 +443,7 @@ header {
   display: none;
   position: absolute;
   background-color: #f6f6f6;
-  border: 1px solid #ddd;
+  border: .06rem solid #ddd;
   z-index: 1;
   width:100%;
   overflow: auto;
@@ -428,7 +466,7 @@ header {
 .search-form > input {
   padding: 16px;
   width: 100%;
-  border: 1px solid #7e7c7c;
+  border: .06rem solid #7e7c7c;
   margin: 0;
 }
 
@@ -439,6 +477,5 @@ header {
 }
 
 .search-container {
-  display: block;
-  align-items: left;
+  display: grid;
 }

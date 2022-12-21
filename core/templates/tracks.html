@@ -1,0 +1,136 @@
+{% extends "base.html" %} 
+{% block title %}
+<title>J-pop Recommender</title>
+{% endblock %} 
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+{% load static %}
+<script src="{% static 'js/recommend.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+        <header>Similar Songs Generator</header>
+        <p>Select up to 5 combinations of songs, artists, and genres.</p>
+        <div class="seed-list" data-seed-artists='{{seed_artists}}', data-seed-tracks='{{seed_tracks}}', data-seed-genres='{{seed_genres}}'> 
+            <template>
+                <div id="search-keyword" data-seed-index="" data-is-track="", data-name-track="", data-name-artist="",
+                data-track-id="", data-artist-id="", data-genre-name="">
+            </div>
+            <span id="seed-remover" data-seed-index="" data-track-id="" data-artist-id="" data-genre-name="">X</span>
+            </template>
+        </div> <!-- end seed list -->
+        <div class="search_wrapper">
+            <div class="child">
+                <input class="search-form" name="q" type="text" id="search-field" placeholder="Search..." autocomplete="off">
+            </div>
+            <div class="dropdown child">
+                <button name="dropdownbtn" class="dropbtn">Song</button>
+                <div id="myDropdown" class="dropdown-content" data-type="track">
+                  <a data-type="track">Song</a>
+                  <a data-type="artist">Artist</a>
+                  <a data-type="genre">Genre</a>
+                </div>
+            </div>
+            <div class="child">
+                <button id="btn_submit">
+                    Generate
+                    {% csrf_token %}
+                </button>
+            </a>
+            </div>    
+        </div> 
+        <div class="dropdown-wrapper">
+        <div id="search-results" data-returned="false">
+            {% if tracks %}
+            {% for track in tracks %}
+            <div name="songcard" class="song-cards" data-is-track="track", data-name-track="{{ track.name }}", data-name-artist="{{ track.artists.0.name }}", 
+            data-track-id="{{ track.id }}", data-artist-id="{{ track.artists.0.id }}">
+                <div class="grid-container">
+                    <div class="child">
+                        <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
+                    </div>
+                    <div class="child center">
+                    <p>{{ track.name }} - {{ track.artists.0.name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% if artists %}
+            {% for artist in artists %}
+            <div class="song-cards" data-is-track="artist", data-name-artist="{{ artist.name }}", 
+            data-artist-id="{{ artist.id }}">
+                <div class="grid-container">
+                    <div class="child">
+                        <img src="{{ artist.images.0.url }}" alt="" height="100" width="100">
+                    </div>
+                    <div class="child center">
+                    <p>{{ artist.name }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% if genres %}
+            {% for genre in genres %}
+            <div class="song-cards" data-is-track="genre", data-name-genre="{{ genre }}">
+                <div class="grid-container">
+                    <div class="child center">
+                    <p>{{ genre }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+    </div><!-- end search wrapper -->
+    </div><!-- end search container -->
+    <div class="recommend-results">
+        {% if recommend_results %}
+        {% if seeds %}
+        <div class="seeds-info">
+        <h3>Recommendations based on:</h3>
+        {% if seeds.seedTracks %}
+         <p>Songs: 
+         </p>
+         {% endif %} <!-- end if seeds.tracks -->
+         {% if seeds.seedArtists %}
+         <p>Artists:</p>
+        {% endif %} <!-- end if seeds.artists -->
+        {% if seeds.seedGenres %}
+         <p>Genres:</p>
+         {% endif %} <!-- end if seeds.genres -->
+        </div>
+         {% endif  %} <!-- end if seed exists -->
+                {% for track in recommend_results %}
+                <div class="song-cards">
+                    <p class="text-left">{{ track.name }} - {{ track.artists.0.name }}</p>
+
+                    <div class="grid-container">
+                        <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
+                        <div class="button-container">
+                            {% if track.preview_url %}
+                            <div>
+                            <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
+                            </div>
+                            {% else %}
+                            {% load static %}
+                            <div class="nabutton bottom"></div>
+                            {% endif %}
+                            <div>
+                            <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
+                            </div>
+                            <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artists.0.name }}" 
+                            data-video-id="" method="post">
+                            {% csrf_token %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+    </div>
+    </div>
+    {% endblock %} 

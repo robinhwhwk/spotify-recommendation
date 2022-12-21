@@ -26,39 +26,41 @@ window.onload = ()=> {
           });
     }
     
-      const ytbuttons = document.querySelectorAll('.youtubebutton');
+    //   const ytbuttons = document.querySelectorAll('.youtubebutton');
       
-      if (ytbuttons) {
-        ytbuttons.forEach(ytbutton => {
-            ytbutton.addEventListener('click', async (e)=> {
+    //   if (ytbuttons) {
+    //     ytbuttons.forEach(ytbutton => {
+    //         ytbutton.addEventListener('click', async (e)=> {
+    //             if (!ytbutton.dataset.videoId) {
 
-                e.preventDefault();
+    //             }
+    //             e.preventDefault();
 
-                const title = ytbutton.dataset.title;
-                console.log(title)
-                const artist = ytbutton.dataset.artist;
-                const query = title + ' - ' + artist;
+    //             const title = ytbutton.dataset.title;
+    //             const artist = ytbutton.dataset.artist;
+    //             const query = title + ' - ' + artist;
                 
-                fetch('/core/youtube/', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                      title: title,
-                      artist: artist,
-                    }),
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'X-CSRFTOKEN': csrftoken,
-                    },
-                  })
-                .then((response) => response.json())
-                .then((data) => {
-                    // Extract the video ID from the response
-                    const videoId = data.video_id;
-                    window.open('https://www.youtube.com/watch?v=' + videoId)
-                });
-            })
-      })
-    }
+    //             fetch('/core/youtube/', {
+    //                 method: 'POST',
+    //                 body: JSON.stringify({
+    //                   title: title,
+    //                   artist: artist,
+    //                 }),
+    //                 headers: {
+    //                   'Content-Type': 'application/json',
+    //                   'X-CSRFTOKEN': csrftoken,
+    //                 },
+    //               })
+    //             .then((response) => response.json())
+    //             .then((data) => {
+    //                 // Extract the video ID from the response
+    //                 const videoId = data.video_id;
+    //                 window.open('https://www.youtube.com/watch?v=' + videoId)
+    //                 ytbutton.dataset.videoId = videoId;
+    //             });
+    //         })
+    //   })
+    // }
     
     const dropdownbuttons = document.querySelectorAll(".dropbtn");
     if (dropdownbuttons) {
@@ -69,12 +71,20 @@ window.onload = ()=> {
       })
     }
 
-    const searchtypes = document.querySelector("#myDropdown").childNodes
+    // Set the drop down text content
+    // If you change the search type, clear the field.
+    let searchtypes = document.querySelector("#myDropdown")
     if (searchtypes) {
+      searchtypes = searchtypes.childNodes;
       searchtypes.forEach(searchtype => {
         searchtype.addEventListener('click', async (e) => {
-          // set the value of the option
+          // get the value of the old search type
+          const previoustype = searchtype.parentElement.dataset.type;
+          // set the value of the new search type
           searchtype.parentElement.dataset.type = searchtype.dataset.type;
+          if (previoustype != searchtype.dataset.type) {
+            searchfield.value = '';
+          }
           if (searchtype.dataset.type == 'track') {
             searchtype.parentElement.previousElementSibling.textContent = 'Song'
           }
@@ -87,40 +97,8 @@ window.onload = ()=> {
         })
       })
     }
+    
 
-    const songcards = document.querySelectorAll('.song-cards')
-
-    if ('content' in document.createElement('template')) {
-      if (songcards) {
-        songcards.forEach(songcard => {
-          songcard.addEventListener('click', async (e) => {
-            console.log('in template');
-            // get the value of the search type
-            const searchtype = songcard.dataset.isTrack
-            const seedlist = document.querySelector('.seed-list')
-            const template = document.querySelector('#search-keyword')
-            const clone = template.content.cloneNode(true);
-
-            clone.dataset.isTrack = searchtype;
-
-            if (searchtype == 'track') {
-              clone.dataset.nameTrack = songcard.dataset.nameTrack;
-              clone.dataset.nameArtist = songcard.dataset.nameArtist;
-              clone.dataset.trackId = songcard.dataset.trackId;
-              clone.dataset.artistId = songcard.dataset.artistId;
-            }
-            if (searchtype == 'artist') {
-              clone.dataset.nameArtist = songcard.dataset.nameArtist;
-              clone.dataset.artistId = songcard.dataset.artistId;
-            }
-            if (searchtype == 'genre') {
-              clone.dataset.nameGenre = songcard.dataset.nameGenre;
-            }
-            seedlist.appendChild(clone);
-          })
-        })
-      }
-    }   
 }
 
 window.addEventListener('click', (e) => {
@@ -135,9 +113,9 @@ window.addEventListener('click', (e) => {
         })
     }
   }
-
+  // toggle search suggestion cards
   const searchresults = document.getElementById('search-results')
-    if (searchresults.dataset.returned == "true") {
+    if (searchresults && searchresults.dataset.returned == "true") {
       if (e.target.matches('#search-field')) {
         searchresults.classList.toggle('inactive');
       } else {
@@ -145,67 +123,115 @@ window.addEventListener('click', (e) => {
       }
     }
 
-    const songcards = document.querySelectorAll('.song-cards')
+    // Add to seed list when suggestions are clicked
+    if (searchresults) {
+      const songcards = searchresults.querySelectorAll('.song-cards')
 
-    songcards.forEach(songcard => {
-      if (songcard.contains(e.target)) {
-      // get the value of the search type
-      const searchtype = songcard.dataset.isTrack
-      const seedlist = document.querySelector('.seed-list')
-      const numseeds = document.querySelectorAll('#search-keyword').length;
-      if (numseeds < 5) {
-        const template = document.querySelectorAll('template')[0]
-        const div = template.content.querySelector('div')
-        const span  = template.content.querySelector('span')
-        const clone = document.importNode(div, true);
-        const xbutton = document.importNode(span, true)
-
-        clone.dataset.isTrack = searchtype;
-        clone.dataset.seedIndex = numseeds;
-        xbutton.dataset.seedIndex = numseeds;
-
-        if (searchtype == 'track') {
-          clone.dataset.nameTrack = songcard.dataset.nameTrack;
-          clone.dataset.nameArtist = songcard.dataset.nameArtist;
-          clone.dataset.trackId = songcard.dataset.trackId;
-          clone.dataset.artistId = songcard.dataset.artistId;
-
-          clone.textContent = clone.dataset.nameTrack + '-' + clone.dataset.nameArtist;
-
-          xbutton.dataset.trackId = songcard.dataset.trackId;
-
-          xbutton.addEventListener('click', ()=> {
-             removeSeed(trackId=songcard.dataset.trackId);
-          });
+      if (songcards && searchresults) {
+        songcards.forEach(songcard => {
+          if (songcard.contains(e.target)) {
+          // get the value of the search type
+          const searchtype = songcard.dataset.isTrack
+          const seedlist = document.querySelector('.seed-list')
+          const numseeds = document.querySelectorAll('#search-keyword').length;
+          if (numseeds < 5) {
+            const template = document.querySelectorAll('template')[0]
+            const div = template.content.querySelector('div')
+            const span  = template.content.querySelector('span')
+            const clone = document.importNode(div, true);
+            const xbutton = document.importNode(span, true)
+    
+            clone.dataset.isTrack = searchtype;
+            clone.dataset.seedIndex = numseeds;
+            xbutton.dataset.seedIndex = numseeds;
+    
+            if (searchtype == 'track') {
+              clone.dataset.nameTrack = songcard.dataset.nameTrack;
+              clone.dataset.nameArtist = songcard.dataset.nameArtist;
+              clone.dataset.trackId = songcard.dataset.trackId;
+              clone.dataset.artistId = songcard.dataset.artistId;
+    
+              clone.textContent = clone.dataset.nameTrack + '-' + clone.dataset.nameArtist;
+    
+              xbutton.dataset.trackId = songcard.dataset.trackId;
+              xbutton.addEventListener('click', ()=> {
+                 removeSeed(trackId=songcard.dataset.trackId, null, null);
+              });
+    
+              seedlist.dataset.seedTracks += (songcard.dataset.trackId) + ',';
+            }
+            if (searchtype == 'artist') {
+              clone.dataset.nameArtist = songcard.dataset.nameArtist;
+              clone.dataset.artistId = songcard.dataset.artistId;
+    
+              clone.textContent = clone.dataset.nameArtist;
+    
+              xbutton.dataset.artistId = songcard.dataset.artistId;
+    
+              xbutton.addEventListener('click', ()=> {
+                removeSeed(trackId=null, artistId=songcard.dataset.artistId, genre=null);
+              });
+    
+              seedlist.dataset.seedArtists +=(songcard.dataset.artistId) + ',';
+            }
+            if (searchtype == 'genre') {
+              clone.dataset.nameGenre = songcard.dataset.nameGenre;
+    
+              clone.textContent = clone.dataset.nameGenre;
+    
+              xbutton.dataset.nameGenre = songcard.dataset.nameGenre;
+              xbutton.addEventListener('click', ()=> {
+                removeSeed(null, null, genre=songcard.dataset.nameGenre);
+              });
+              seedlist.dataset.seedGenres+=(songcard.dataset.nameGenre) + ',';
+            }
+            seedlist.appendChild(clone);
+            seedlist.appendChild(xbutton);
+          } 
         }
-        if (searchtype == 'artist') {
-          clone.dataset.nameArtist = songcard.dataset.nameArtist;
-          clone.dataset.artistId = songcard.dataset.artistId;
-
-          clone.textContent = clone.dataset.nameArtist;
-
-          xbutton.dataset.artistId = songcard.dataset.artistId;
-
-          xbutton.addEventListener('click', ()=> {
-            removeSeed(artistId=songcard.dataset.artistId);
-          });
-        }
-        if (searchtype == 'genre') {
-          clone.dataset.nameGenre = songcard.dataset.nameGenre;
-
-          clone.textContent = clone.dataset.nameGenre;
-
-          xbutton.dataset.nameGenre == songcard.dataset.nameGenre;
-
-          xbutton.addEventListener('click', ()=> {
-            removeSeed(genre=songcard.dataset.nameGenre);
-          });
-        }
-        seedlist.appendChild(clone);
-        seedlist.appendChild(xbutton);
-      } 
+      })
+      }
     }
-  })   
+
+  // Add youtubue links to buttons when clicked
+  const ytbuttons = document.querySelectorAll('.youtubebutton');
+      
+  if (ytbuttons) {
+    ytbuttons.forEach(ytbutton => {
+      if (ytbutton.contains(e.target)) {
+        if (!ytbutton.dataset.videoId) {
+          e.preventDefault();
+
+            const title = ytbutton.dataset.title;
+            const artist = ytbutton.dataset.artist;
+            const query = title + ' - ' + artist;
+            
+            fetch('/core/youtube/', {
+                method: 'POST',
+                body: JSON.stringify({
+                  title: title,
+                  artist: artist,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFTOKEN': Cookies.get('csrftoken'),
+                },
+              })
+            .then((response) => response.json())
+            .then((data) => {
+                // Extract the video ID from the response
+                const videoId = data.video_id;
+                window.open('https://www.youtube.com/watch?v=' + videoId)
+                ytbutton.dataset.videoId = videoId;
+            });
+        } else {
+          window.open('https://www.youtube.com/watch?v=' + ytbutton.dataset.videoId);
+        }
+        
+      }
+  })
+}
+
 });
 
 
@@ -227,21 +253,21 @@ function showSuggestions() {
 
 function removeSeed(trackId=null, artistId=null, genre=null) {
   if (trackId) {
-    const seed = document.querySelector(`#search-keyword[data-track-id="${trackId}`);
-    const xbutton = document.querySelector(`#seed-remover[data-track-id="${trackId}`);
+    const seed = document.querySelector(`#search-keyword[data-track-id="${trackId}"]`);
+    const xbutton = document.querySelector(`#seed-remover[data-track-id="${trackId}"]`);
     seed.remove();
     xbutton.remove();
     
   }
   if (artistId) {
-    const seed = document.querySelector(`#search-keyword [data-artist-id="${artistId}`);
-    const xbutton = document.querySelector(`#seed-remover[data-artist-id="${artistId}`);
+    const seed = document.querySelector(`#search-keyword[data-artist-id="${artistId}"]`);
+    const xbutton = document.querySelector(`#seed-remover[data-artist-id="${artistId}"]`);
     seed.remove();
     xbutton.remove();
   }
   if (genre) {
-    const seed = document.querySelector(`#search-keyword [data-name-genre="${genre}`);
-    const xbutton = document.querySelector(`#seed-remover[data-name-genre="${genre}`);
+    const seed = document.querySelector(`#search-keyword[data-name-genre="${genre}"]`);
+    const xbutton = document.querySelector(`#seed-remover[data-name-genre="${genre}"]`);
     seed.remove();
     xbutton.remove();
   }

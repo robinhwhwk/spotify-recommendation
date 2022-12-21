@@ -8,9 +8,10 @@ urlpatterns = [
     path('', views.IndexView.as_view()),
     path('index/', views.IndexView.as_view(), name='index'),
     path('popular/', views.PopularView.as_view(), name='popular'),
-    path('youtube/', views.youtube),
-    path('recommendation/search/', views.SearchTracksView.as_view(), name='recommendation'),
+    path('youtube/', views.youtube, name='youtube'),
+    path('recommendation/', views.SearchTracksView.as_view(), name='recommendation'),
     path('recommendation/search/', views.SearchTracksView.as_view(), name='searchtracks'),
     path('moods/<str:mood>', views.MoodTracksView.as_view(), name='moodtracks'),
-    path('recommendation/tracks', views.SearchTracksView.as_view(), name='recommendtracks'),
+    path('recommendation/tracks/<str:tracks>/<str:artists>/<str:genres>', views.recommend_tracks, name='recommend-tracks'),
+    path('recommendation/tracks/', views.recommend_tracks, name='recommend-tracks'),
 ]

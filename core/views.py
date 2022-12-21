@@ -117,3 +117,26 @@ def youtube(request):
 
             # Return the video ID as the response
             return JsonResponse({'video_id': video_id})
+
+@csrf_protect
+def recommend_tracks(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        seed_tracks = data['seedTracks'].split(',')
+        seed_artists = data['seedArtists'].split(',')
+        seed_genres = data['seedGenres'].split(',')
+        results = sp.recommendations(seed_artists=seed_artists, seed_tracks=seed_tracks, seed_genres=seed_genres, country='JP')
+        seeds = {}
+        if len(seed_tracks) > 1:
+            seeds['seedTracks'] = data['seedTracks']
+        if len(seed_artists) > 1:
+            seeds['seedArtists'] = data['seedArtists']
+        if len(seed_genres) > 1:
+            seeds['seedGenres'] = data['seedGenres']
+        context = {
+            'recommend_results': results['tracks'],
+            'seeds': seeds,
+        }
+        return render(request, 'tracks.html', context=context)
+    if request.method == 'GET':
+        return render(request,'tracks.html')

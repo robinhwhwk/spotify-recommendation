@@ -27,7 +27,8 @@
                             <div>
                             <a href="{{ track.track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
                             </div>
-                            <form class="youtubebutton" data-title="{{ track.track.name }}" data-artist="{{ track.track.artists.0.name }}" method="post">
+                            <form class="youtubebutton" data-title="{{ track.track.name }}" data-artist="{{ track.track.artists.0.name }}" 
+                            data-video-id="" method="post">
                             {% csrf_token %}
                             </form>
                         </div>

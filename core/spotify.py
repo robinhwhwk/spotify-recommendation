@@ -7,28 +7,28 @@ def save_playlist(playlist, playlist_id=None):
         return
     for item in playlist:
         track = item['track']
+        id = track['id']
         name = track['name']
         artist = track['artists'][0]['name']
         spotify_link = track['external_urls']['spotify']
         preview_url = track['preview_url']
         if not Songs.objects.filter(spotify_link=spotify_link).exists():
-            query = name + ' - ' + artist
             image_url = track['album']['images'][0]['url']
-            song = Songs(name, artist, spotify_link, preview_url, None, playlist_id, image_url)
+            song = Songs(id, name, artist, spotify_link, preview_url, None, playlist_id, image_url)
             song.save()
 
 def save_tracks(tracks):
     if not tracks: 
         return
     for track in tracks:
+        id = track['id']
         name = track['name']
         artist = track['artists'][0]['name']
         spotify_link = track['external_urls']['spotify']
         preview_url = track['preview_url']
         if not Songs.objects.filter(spotify_link=spotify_link).exists():
-            query = name + ' - ' + artist
             image_url = track['album']['images'][0]['url']
-            song = Songs(name, artist, spotify_link, preview_url, youtube_link=None, playlist_id=None, image_url=image_url)
+            song = Songs(id, name, artist, spotify_link, preview_url, youtube_link=None, playlist_id=None, image_url=image_url)
             song.save()
 
 def generate_mood_playlist(mood):
@@ -130,10 +130,12 @@ def save_artists(artists, artist_list=None):
     if not artists: 
         return
     for artist in artists:
-        name = artist['name']
-        spotify_link = artist['external_urls']['spotify']
-        if not Artists.objects.filter(spotify_link=spotify_link).exists():
+        id = artist['id']
+        if not Artists.objects.filter(id=id).exists():
+            name = artist['name']
+            spotify_link = artist['external_urls']['spotify']
             image_url = artist['images'][0]['url'] if artist['images'] else None
             popularity = artist['popularity']
-            artist = Artists(name, spotify_link, image_url=image_url, artist_list=artist_list, popularity=popularity)
+            followers = artist['followers']['total']
+            artist = Artists(id, name, spotify_link, image_url=image_url, artist_list=artist_list, popularity=popularity, followers=followers)
             artist.save()

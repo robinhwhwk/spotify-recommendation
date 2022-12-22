@@ -36,10 +36,21 @@ class PopularView(View):
         # Playlist was updated in the last day
         if Playlists.objects.filter(id=self.playlist_id, last_updated=self.current_date).exists():
             playlist = Playlists.objects.filter(id=self.playlist_id, last_updated=self.current_date)[0].tracks.all()
-            context = {
-                'tracks' : playlist,
-            }
-            return render(request, 'popular.html', context=context)
+            if playlist:
+                context = {
+                    'tracks' : playlist,
+                }
+                return render(request, 'popular.html', context=context)
+            else:
+
+                playlist = sp.playlist(self.playlist_id)
+                playlist = playlist['tracks']['items']
+                save_playlist(playlist, self.playlist_id)
+                context = {
+                    'items' : playlist,
+                }
+
+                return render(request, 'popular.html', context=context)
 
         pl = Playlists(self.playlist_id, self.current_date)
         pl.save()
@@ -195,9 +206,15 @@ class ArtistView(View):
 
         # with an artist id parameter, return the artist's page
         else:
-        
-            results = sp.artist(artist_id=artistId)
-            context = {
-                'artist': results,
-            }
-            return render(request, 'artist.html', context=context)
+            if Artists.objects.filter(id=artistId).exists():
+                results = Artists.objects.filter(id=artistId)[0]
+                context = {
+                    'artist': results,
+                }
+                return render(request, 'artist.html', context=context)
+            else:
+                results = sp.artist(artist_id=artistId)
+                context = {
+                    'artist': results,
+                }
+                return render(request, 'artist.html', context=context)

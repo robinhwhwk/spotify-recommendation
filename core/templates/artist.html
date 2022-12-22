@@ -10,7 +10,7 @@
             <!-- If the artists are not in our database, we use the spotify's json response to format our page. -->
             {% if artist %}
                 <div class="song-cards">
-                    <p class="text-left">{{ forloop.counter }}. {{ artist.name }}</p>
+                    <p class="text-left">{{ artist.name }}</p>
 
                     <div class="grid-container">
                         {% if artist.images %}
@@ -36,6 +36,22 @@
                             </form>
                         </div>
                         {% endif %}
+                    </div>
+                    <div>
+                        <p class="left">
+                            Followers: 
+                            {% if artist.followers.total %}
+                            {{ artist.followers.total }}
+                            {% else %}
+                            {{artist.followers}}
+                            {% endif %}
+                             /
+                            Popularity: {{ artist.popularity }}
+                            {% if artist.popularity >= 60 %}
+                            {% load static %}
+                            <img src="{% static 'css/images/fireemoji.png' %}" alt="Hot!" class="fireemoji">
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             {% endif %}

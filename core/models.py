@@ -18,9 +18,10 @@ class ArtistList(models.Model):
         return 'artist list: %s'.format(self.name)
 
 class Songs(models.Model):
+    id = models.CharField(max_length=500, primary_key=True, default='')
     name = models.CharField(max_length=500)
-    artist = models.CharField(max_length=500, null=True, blank=True)
-    spotify_link = models.CharField(max_length=500, primary_key=True)
+    artist = models.CharField(max_length=500, default=None, null=True, blank=True)
+    spotify_link = models.CharField(max_length=500)
     preview_url = models.CharField(max_length=500, null=True, blank=True)
     youtube_link = models.CharField(max_length=500, null=True, blank=True)
     playlist = models.ForeignKey(Playlists, related_name='tracks', on_delete=models.CASCADE, null=True)
@@ -30,13 +31,15 @@ class Songs(models.Model):
         return '%s - %s'.format(self.name, self.artist)
 
 class Artists(models.Model):
+    id = models.CharField(max_length=500, primary_key=True, default='')
     name = models.CharField(max_length=500)
-    spotify_link = models.CharField(max_length=500, primary_key=True)
+    spotify_link = models.CharField(max_length=500)
     youtube_link = models.CharField(max_length=500, null=True, blank=True)
     top_album = models.ForeignKey(Playlists, related_name='artist', on_delete=models.CASCADE, null=True, blank=True)
     image_url = models.CharField(max_length=500, null=True, blank=True)
     artist_list = models.ForeignKey(ArtistList, related_name='artist', on_delete=models.CASCADE, null=True, blank=True)
     popularity = models.IntegerField(null=True, blank=True)
+    followers = models.IntegerField(null=True, default=True)
 
     def __str__(self) -> str:
         return '%s'.format(self.name)

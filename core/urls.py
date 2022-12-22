@@ -15,5 +15,5 @@ urlpatterns = [
     path('recommendation/tracks/<str:tracks>/<str:artists>/<str:genres>', views.recommend_tracks, name='recommend-tracks'),
     path('recommendation/tracks/', views.recommend_tracks, name='recommend-tracks'),
     path('artists/', views.ArtistView.as_view(), name='artists'),
-    path('artists/<str:name>', views.ArtistView.as_view(), name='artists'),
+    path('artists/<str:artistId>', views.ArtistView.as_view(), name='artists'),
 ]

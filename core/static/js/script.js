@@ -204,13 +204,15 @@ window.addEventListener('click', (e) => {
 
             const title = ytbutton.dataset.title;
             const artist = ytbutton.dataset.artist;
-            const query = title + ' - ' + artist;
+            const query = title + ' ' + artist;
+            let type = title.length > 1 ? 'video' : 'channel'
             
             fetch('/core/youtube/', {
                 method: 'POST',
                 body: JSON.stringify({
                   title: title,
                   artist: artist,
+                  type: type,
                 }),
                 headers: {
                   'Content-Type': 'application/json',
@@ -220,9 +222,16 @@ window.addEventListener('click', (e) => {
             .then((response) => response.json())
             .then((data) => {
                 // Extract the video ID from the response
-                const videoId = data.video_id;
-                window.open('https://www.youtube.com/watch?v=' + videoId)
-                ytbutton.dataset.videoId = videoId;
+                if (type == 'video') {
+                  const videoId = data.video_id;
+                  window.open('https://www.youtube.com/watch?v=' + videoId)
+                  ytbutton.dataset.videoId = videoId;
+                }
+                else if (type == 'channel') {
+                  const channelId = data.channel_id;
+                  window.open('https://www.youtube.com/channel/' + channelId)
+                  ytbutton.dataset.channelId = channelId;
+                }
             });
         } else {
           window.open('https://www.youtube.com/watch?v=' + ytbutton.dataset.videoId);

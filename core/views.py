@@ -39,7 +39,6 @@ class PopularView(View):
             context = {
                 'tracks' : playlist,
             }
-            print(1)
             return render(request, 'popular.html', context=context)
 
         pl = Playlists(self.playlist_id, self.current_date)
@@ -48,7 +47,6 @@ class PopularView(View):
         playlist = sp.playlist(self.playlist_id)
         playlist = playlist['tracks']['items']
         save_playlist(playlist, self.playlist_id)
-        print(2)
         context = {
             'items' : playlist,
         }
@@ -98,6 +96,7 @@ def youtube(request):
             return JsonResponse({'video_id' : 'None'})
         title = body['title']
         artist = body['artist']
+        type = body['type']
         query = title + ' ' + artist
         if Songs.objects.filter(name=title, artist=artist).exists():
             song = Songs.objects.filter(name=title, artist=artist).all()[0]
@@ -112,11 +111,15 @@ def youtube(request):
                 # Return the video ID as the response
                 return JsonResponse({'video_id': video_id})
         else:
-            youtube_response = search_youtube(query=query)
-            video_id = youtube_response['items'][0]['id']['videoId']
+            youtube_response = search_youtube(query=query, type=type)
+            if type == 'video':
+                video_id = youtube_response['items'][0]['id']['videoId']
 
-            # Return the video ID as the response
-            return JsonResponse({'video_id': video_id})
+                # Return the video ID as the response
+                return JsonResponse({'video_id': video_id})
+            elif type=='channel':
+                channel_id = youtube_response['items'][0]['id']['channelId']
+                return JsonResponse({'channel_id': channel_id})
 
 @csrf_protect
 def recommend_tracks(request):
@@ -140,3 +143,61 @@ def recommend_tracks(request):
         return render(request, 'tracks.html', context=context)
     if request.method == 'GET':
         return render(request,'tracks.html')
+
+
+class ArtistView(View):
+    current_date = date.today()
+    artist_list_name = 'top japan artists'
+    def get(self, request, artistId=None):
+
+        # without an input, return the normal page with top 50 artists
+        if not artistId:
+            # if the artist list was updated in the past day, fetch that data
+            if ArtistList.objects.filter(name=self.artist_list_name,last_updated=self.current_date).exists():
+                artists = ArtistList.objects.filter(name=self.artist_list_name,last_updated=self.current_date)[0].artist.all()
+                # if the artist list is empty, search spotify
+                if not artists:
+                    query = 'genre:j-pop'
+                    genre = ['j-pop']
+                    # array of dictionary of artists
+                    results = sp.search(query, type='artist', market='JP', limit=50)
+                    results = results['artists']['items']
+                    artists_by_popularity = sorted(results, key=lambda artist: artist['popularity'], reverse=True)
+                    context = {
+                        'artists': artists_by_popularity,
+                    }
+                    artistList = ArtistList(self.artist_list_name, self.current_date, artists_by_popularity)
+                    artistList.save()
+
+                    save_artists(artists_by_popularity, artistList)
+                    return render(request, 'artists.html', context=context)
+                # if the artist list is not empty
+                else:
+                    context = {
+                        'artists': artists,
+                    }
+                    return render(request, 'artists.html', context=context)
+            # if the artist list wasn't updated in the past day
+            else:
+                query = 'genre:j-pop'
+                # array of dictionary of artists
+                results = sp.search(query, type='artist', market='JP', limit=50)
+                results = results['artists']['items']
+                artists_by_popularity = sorted(results, key=lambda artist: artist['popularity'], reverse=True)
+                context = {
+                    'artists': artists_by_popularity,
+                }
+                artistList = ArtistList(self.artist_list_name, self.current_date, artists_by_popularity)
+                artistList.save()
+
+                save_artists(artists_by_popularity, artistList)
+                return render(request, 'artists.html', context=context)
+
+        # with an artist id parameter, return the artist's page
+        else:
+        
+            results = sp.artist(artist_id=artistId)
+            context = {
+                'artist': results,
+            }
+            return render(request, 'artist.html', context=context)

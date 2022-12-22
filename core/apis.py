@@ -36,9 +36,10 @@ api_version = "v3"
 youtube = googleapiclient.discovery.build(
     api_service_name, api_version, developerKey=env("YT_KEY_2"))
 
-def search_youtube(query):
+def search_youtube(query, type='track'):
     request = youtube.search().list(
         part="snippet",
+        type=type,
         maxResults=1,
         q=query
     )

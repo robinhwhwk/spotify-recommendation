@@ -125,3 +125,15 @@ def generate_mood_playlist(mood):
 
     return results['tracks']
     
+
+def save_artists(artists, artist_list=None):
+    if not artists: 
+        return
+    for artist in artists:
+        name = artist['name']
+        spotify_link = artist['external_urls']['spotify']
+        if not Artists.objects.filter(spotify_link=spotify_link).exists():
+            image_url = artist['images'][0]['url'] if artist['images'] else None
+            popularity = artist['popularity']
+            artist = Artists(name, spotify_link, image_url=image_url, artist_list=artist_list, popularity=popularity)
+            artist.save()

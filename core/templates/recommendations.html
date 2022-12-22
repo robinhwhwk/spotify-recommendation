@@ -10,9 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="search-container">
+        
         <header>Similar Songs Generator</header>
-        <p>Select up to 5 combinations of songs, artists, and genres.</p>
+        <p class="text-center">Select up to 5 combinations of songs, artists, and genres.</p>
         <div class="seed-list" data-seed-artists='', data-seed-tracks='', data-seed-genres=''> 
             <template>
                 <div id="search-keyword" data-seed-index="" data-is-track="", data-name-track="", data-name-artist="",
@@ -21,6 +21,8 @@
             <span id="seed-remover" data-seed-index="" data-track-id="" data-artist-id="" data-genre-name="">X</span>
             </template>
         </div>
+        <hr>
+        <div class="search-container">
         <div class="search_wrapper">
             <div class="child">
                 <input class="search-form" name="q" type="text" id="search-field" placeholder="Search..." autocomplete="off">

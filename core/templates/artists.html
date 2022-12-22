@@ -1,0 +1,53 @@
+{% extends "base.html" %} 
+{% block title %}
+<title>J-pop Recommender</title>
+{% endblock %} 
+{% block content %}
+</head>
+<body>
+    <div class="container">
+        <header class="text-left">Top Artists</header>
+            <!-- If the artists are not in our database, we use the spotify's json response to format our page. -->
+            {% if artists %}
+                {% for artist in artists %}
+                <div class="song-cards">
+                    <p class="text-left">{{ forloop.counter }}. {{ artist.name }}</p>
+
+                    <div class="grid-container">
+                        {% if artist.images %}
+                        <img src="{{ artist.images.0.url }}" alt="Image not available" height="100" width="100">
+                        <div class="button-container">
+                            <div>
+                            <a href="{{ artist.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
+                            </div>
+                            <form class="youtubebutton" data-title="" data-artist="{{ artist.name }}" 
+                            data-video-id="" method="post">
+                            {% csrf_token %}
+                            </form>
+                        </div>
+                        {% else %}
+                        <img src="{{ artist.image_url }}" alt="Image not available" height="100" width="100">
+                        <div class="button-container">
+                            <div>
+                            <a href="{{ artist.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>
+                            </div>
+                            <form class="youtubebutton" data-title="" data-artist="{{ artist.name }}" 
+                            data-video-id="" data-channel-id="" method="post">
+                            {% csrf_token %}
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="left">
+                            {% if artist.popularity >= 60 %}
+                            {% load static %}
+                            <img src="{% static 'css/images/fireemoji.png' %}" alt="Hot!" class="fireemoji">
+                            {% endif %}
+                            Popularity: {{ artist.popularity }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+    </div>
+{% endblock %}

@@ -106,12 +106,14 @@
          {% endif  %} <!-- end if seed exists -->
          <a href="{% url 'playlist' %}"><button class="playlistbutton"></button></a>
          <div>
+            <!-- Placeholder for adding playlist for user -->
          {% if playlists %}
         {% for playlist in playlists %}
 
         {{playlist.name}}
          {% endfor %}
          {% endif %}
+         <!-- end placeholder -->
         </div>
                 {% for track in recommend_results %}
                 <div class="song-cards">

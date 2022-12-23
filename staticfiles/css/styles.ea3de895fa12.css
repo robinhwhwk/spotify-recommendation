@@ -1,0 +1,567 @@
+/* Set the base font size */
+html {
+  font-size: 16px; /* 16px is the base font size */
+}
+
+body {
+  background-color: #1DB954;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: rgb(184, 227, 153);
+  width: 100%;
+}
+
+.search_wrapper {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr 1.2fr;
+  height: 100%;
+  width: 100%;
+  margin-bottom: 0;
+  float: left;
+}
+
+.child {
+  flex-grow: 1;
+  height: 100%;
+}
+
+
+input {
+  font-size: 1rem;
+}
+
+.song-cards {
+  display: grid;
+  align-items: center;
+  border: .06rem solid #7e7c7c;
+  border-bottom: 0;
+  background-color: white;
+  width: 90%;
+  height: fit-content;
+}
+
+.song-cards p {
+  overflow: hidden;
+}
+
+
+
+#btn_submit {
+  /* width: 8.75rem; 
+  height: 2.5rem; 
+  margin-top: 0.625rem; */
+  margin: 0;
+  width: 100%;
+  padding: 1rem;
+  border: .06rem solid #7e7c7c;
+  flex-grow: 1;
+}
+
+.mouseover {
+  background-color: lightgreen;
+}
+
+.button-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-right: 60%; 
+  padding-top: 1%
+}
+
+.playbutton {
+  background: url("images/playbutton.747316d8ba73.png") no-repeat;
+  background-size: contain;
+  height: 3.125rem; /* 50px converted to rem */
+  width: 3.125rem; /* 50px converted to rem */
+  margin: 0.625rem; /* 10px converted to rem */
+  border: none; 
+}
+
+.nabutton {
+  background: url("images/notavailablebutton.9322a9205e14.png") no-repeat;
+  background-size: contain;
+  height: 3.125rem; /* 50px converted to rem */
+  width: 3.125rem; /* 50px converted to rem */
+  margin: 0.625rem; /* 10px converted to rem */
+  border: none;
+}
+
+.spotifybutton {
+  background: url("images/spotifybutton.167737e6a95f.png") no-repeat;
+  background-size: contain;
+  height: 3.125rem; /* 50px converted to rem */
+  width: 6.25rem; /* 100px converted to rem */
+  margin: 0.625rem; /* 10px converted to rem */
+  border: none;
+}
+
+.youtubebutton {
+  background: url("images/youtubebutton.6e977516e088.png") no-repeat;
+  background-size: 2.5rem; /* 40px converted to rem */
+  height: 3.125rem; /* 50px converted to rem */
+  width: 3.125rem; /* 50px converted to rem */
+  margin: 0.625rem; /* 10px converted to rem */
+  margin-top: 1.25rem;
+  border: none;
+  cursor: pointer;
+}
+
+.playlistbutton {
+  background: url("images/playlistbutton.535931787647.png") no-repeat;
+  background-size: contain;
+  height: 3.125rem; /* 50px converted to rem */
+  width: 6.25rem; /* 100px converted to rem */
+  margin: 0.625rem; /* 10px converted to rem */
+  border: none;
+}
+
+.label {
+  max-width: fit-content;
+  height: 1.25rem; /* 20px converted to rem */
+  border: .06rem solid 7e7c7c;
+  background-color: white;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  text-orientation: upright;
+  margin-right: 0.625rem; /* 10px converted to rem */
+  border-radius: 50%;
+}
+
+span.label:hover {
+  background-color: red;
+}
+
+.inactive {
+  opacity: 0%;
+  pointer-events: none;
+}
+
+.card > img {
+  margin: 0px 0.3125rem 0px 0px; /* 5px converted to rem */
+}
+
+.card > text {
+  font-size: 0.5rem; /* 0.8rem converted to rem */
+  margin-bottom: 25%;
+}
+
+.hide {
+  display: none;
+}
+
+header {
+  text-align: center;
+  margin: 1.875rem; /* 30px converted to rem */
+  font-size: 2rem;
+}
+
+.grid-container {
+  display: inline-flex; 
+
+}
+
+.flex {
+  display: inline-flex;
+}
+
+#search-results {
+  float: left;
+  width: 30.8rem; 
+  padding-right: 1.5rem;
+  position: absolute;
+
+}
+
+#search-results .song-cards {
+  width: 30.8rem;
+}
+
+#search-results .song-cards .grid-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+  display: inline-flex;
+}
+
+.navbar li {
+  float: left;
+}
+
+.navbar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 1.25rem 0.9375rem; /* 20px converted to rem */
+  text-decoration: none;
+}
+
+.navbar li a:hover {
+  background-color: #111;
+}
+
+.navbar .active {
+  background-color: #04AA6D;
+}
+
+.navbar .search-container {
+  float: right;
+}
+
+.navbar input[type=text] {
+  padding: 0.625rem; /* 10px converted to rem */
+  margin-top: 1.25rem; /* 20px converted to rem */
+  font-size: 0.875rem; /* 14px converted to rem */
+  border: none;
+}
+
+.navbar .search-container button {
+  float: right;
+  padding: 0.625rem 1.25rem; /* 10px converted to rem */
+  margin-top: 1.25rem; /* 20px converted to rem */
+  margin-right: 1.25rem; /* 20px converted to rem */
+  background: #ddd;
+  font-size: 0.875rem; /* 14px converted to rem */
+  border: none;
+  cursor: pointer;
+}
+
+.navbar .search-container button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+  .navbar .search-container {
+    float: none;
+  }
+  .navbar .search-container button {
+    width: 100%;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(184, 227, 153);
+    
+  }
+  img {
+    margin: .2rem;
+  }
+  p {
+    margin: .2rem;
+  }
+  #search-results .song-cards {
+    margin-left: 3rem;
+    width: 20rem;
+  }
+  .search_wrapper {
+    width: 20rem;
+  }
+  
+}
+.Happy {
+  background: url("images/Happy.73a4de564d99.png") no-repeat;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color: rgb(251, 227, 49);
+}
+
+.Sad {
+  background: url("images/Sad.2319638122ff.png") no-repeat;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color: rgb(110, 110, 207);
+}
+
+.Relaxed {
+  background: url("images/Relaxed.5c02937c7478.png") no-repeat;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color: beige;
+}
+
+.Anxious {
+  background: url("images/Anxious.1620a4780f5c.png") no-repeat;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color: lightgoldenrodyellow;
+}
+
+.Angry {
+  background: url("images/Angry.418598714f15.png") no-repeat;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color: red;
+}
+
+.Nostalgic {
+  background: url("images/Nostalgic.68bf61731b0d.png") no-repeat;
+  opacity: 0.6;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color:rgb(0, 0, 0);
+}
+
+.Bored {
+  background: url("images/Bored.e964117874b4.png") no-repeat;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color: rgb(214, 214, 214);
+}
+
+.Lonely {
+  background: url("images/Lonely.df39e01e0a3a.png") no-repeat;
+  background-size: 12.5rem;
+  height: 8rem;
+  width: 12.5rem;
+  margin: 0.625rem;
+  border: none;
+  color: black;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 1.25rem;
+  justify-content: center;
+  justify-items: center;
+}
+
+#search-results .song-cards:hover{
+  background-color: #aac2b9;
+}
+
+#search-results .grid-container{
+  display: inline-flex;
+}
+
+
+#search-results .center {
+  height: 80px;
+  line-height: 80px;
+}
+
+#search-results p {
+  line-height: normal;
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+}
+
+#search-results img {
+  width: 80%;
+  height: 80%;
+}
+
+img {
+  width: 4rem;
+  height: 4rem;
+}
+.mood {
+  position: relative;
+  text-align: center;
+  color: white;
+  font-weight: 900;
+}
+
+@media only screen and (min-width: 640px) {
+  .grid {
+    grid-template-columns: 47.5% 47.5%;
+    gap: 2.5rem;
+  }
+
+  .song-cards {
+    width: 35rem;
+  }
+
+  img {
+    width: 6.6rem;
+    height: 6.6rem;
+    margin: .5rem;
+  }
+  
+  p {
+    margin: .5rem;
+  }
+
+  .button-container {
+    padding-top: 2.5rem;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .grid {
+    grid-template-columns: 15% 15% 15% 15%;
+    gap: 3rem;
+  }
+  .container {
+    width: 60%;
+    
+  }
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  width: 100%;
+  font-size: 16px;
+  border: .06rem solid #7e7c7c;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  border: .06rem solid #ddd;
+  z-index: 1;
+  width:100%;
+  overflow: auto;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+input.search-form {
+  padding: 16px;
+  width: 100%;
+  border: .06rem solid #7e7c7c;
+  margin: 0;
+}
+
+.center {
+  margin: auto;
+  width: 100%;
+  padding: 10px;
+}
+
+.search-container {
+  display: grid;
+}
+
+.seed-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#search-keyword {
+  font-size: .8rem;
+  border: .06rem solid #7e7c7c;
+  width: fit-content;
+  padding: .1rem;
+  margin: .1rem;
+}
+
+#seed-remover {
+  font-size: .8rem;
+  font-weight: 900;
+  padding: .1rem;
+  margin: .1rem .3rem .1rem 0rem;
+  border: .06rem solid #7e7c7c;
+  cursor: pointer;
+}
+
+.recommend-results {
+  margin: 2rem;
+
+}
+
+.dropdown-wrapper {
+  position: relative;
+  z-index: 1000;
+}
+
+.fireemoji {
+  height: 1rem;
+  width: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+#tabs {
+  display: flex;
+}
+.tab-button {
+  flex: 1;
+  background: #ccc;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.tab-button.active {
+  background: #fff;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
+}

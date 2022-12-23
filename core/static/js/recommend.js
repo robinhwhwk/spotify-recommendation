@@ -21,7 +21,6 @@ $(window).on('load', ()=> {
                 'seedGenres' : seedGenres,
             }),
             success: (function(response) {
-                alert('success');
                 const html = response
                 let parser = new DOMParser();
                 let doc = parser.parseFromString(html, 'text/html');

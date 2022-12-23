@@ -13,6 +13,7 @@ from .apis import *
 from .spotify import *
 from .models import *
 import json
+import sys
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 
 # Create your views here.
@@ -35,7 +36,7 @@ class PopularView(View):
     def get(self, request):
         # Playlist was updated in the last day
         if Playlists.objects.filter(id=self.playlist_id, last_updated=self.current_date).exists():
-            playlist = Playlists.objects.filter(id=self.playlist_id, last_updated=self.current_date)[0].tracks.all()
+            playlist = Playlists.objects.filter(id=self.playlist_id, last_updated=self.current_date)[0].tracks.all().order_by('playlist_rank')
             if playlist:
                 context = {
                     'tracks' : playlist,
@@ -83,6 +84,7 @@ class SearchTracksView(View):
         results = search_spotify(query, type)
 
         type = type + 's'
+
         
         context = {
             type: results,
@@ -206,15 +208,63 @@ class ArtistView(View):
 
         # with an artist id parameter, return the artist's page
         else:
-            if Artists.objects.filter(id=artistId).exists():
+            if Artists.objects.filter(id=artistId, last_updated=self.current_date).exists():
                 results = Artists.objects.filter(id=artistId)[0]
-                context = {
-                    'artist': results,
-                }
-                return render(request, 'artist.html', context=context)
+                if Artists.objects.filter(id=artistId, last_updated=self.current_date)[0].toptracks.all():
+                    toptracks = Artists.objects.filter(id=artistId, last_updated=self.current_date)[0].toptracks.all().order_by('-popularity').values()
+                    recommendations = sp.recommendations(seed_artists=[artistId])['tracks']
+                    context = {
+                        'artist': results,
+                        'toptracks': toptracks,
+                        'recommendations' : recommendations,
+                    }
+                    return render(request, 'artist.html', context=context)
+                else:
+                    toptracks = sp.artist_top_tracks(artist_id=artistId)['tracks']
+                    save_tracks(toptracks, artistId)
+                    recommendations = sp.recommendations(seed_artists=[artistId])['tracks']
+                    context = {
+                        'artist': results,
+                        'toptracks': toptracks,
+                        'recommendations' : recommendations,
+                    }
+                    return render(request, 'artist.html', context=context)
             else:
                 results = sp.artist(artist_id=artistId)
+                save_artists([results])
+                toptracks = sp.artist_top_tracks(artist_id=artistId)['tracks']
+                save_tracks(toptracks, artistId)
+                recommendations = sp.recommendations(seed_artists=[artistId])['tracks']
                 context = {
                     'artist': results,
+                    'toptracks': toptracks,
+                    'recommendations' : recommendations,
                 }
                 return render(request, 'artist.html', context=context)
+
+
+class PlaylistView(View):
+    def get(self, request):
+        print('here')
+        scope = "user-library-read playlist-modify-private playlist-modify-public"
+        if len(sys.argv) > 1:
+            username = sys.argv[1]
+        else:
+            print("Usage: %s username" % (sys.argv[0],))
+            sys.exit()
+        token = util.prompt_for_user_token(username, scope, redirect_uri='http://127.0.0.1:8000/callback/')
+        results = None
+        
+        if token:
+            auth_manager = SpotifyOAuth(scope=scope, redirect_uri='http://127.0.0.1:8000/callback/')
+            sp = spotipy.Spotify(auth_manager=auth_manager, auth=token)
+            results = sp.current_user_playlists(5)['items']
+
+            # Redirect the user to the authorization URL
+            # You can do this using Django's redirect function or by sending an HTTP redirect
+            # response to the user's browser
+            context = {
+                'playlists':results,
+            }
+            return render(request, 'tracks.html', context=context)
+

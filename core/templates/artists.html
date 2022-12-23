@@ -14,7 +14,9 @@
                     <a href="{% url 'artists' artist.id %}"><p class="text-left">{{ forloop.counter }}. {{ artist.name }}</p></a>
                     <div class="grid-container">
                         {% if artist.images %}
-                        <img src="{{ artist.images.0.url }}" alt="Image not available" height="100" width="100">
+                        <a href="{% url 'artists' artist.id %}">
+                            <img src="{{ artist.images.0.url }}" alt="Image not available" height="100" width="100">
+                        </a>
                         <div class="button-container">
                             <div>
                             <a href="{{ artist.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
@@ -25,7 +27,9 @@
                             </form>
                         </div>
                         {% else %}
+                        <a href="{% url 'artists' artist.id %}">
                         <img src="{{ artist.image_url }}" alt="Image not available" height="100" width="100">
+                        </a>
                         <div class="button-container">
                             <div>
                             <a href="{{ artist.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>

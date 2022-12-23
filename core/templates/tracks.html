@@ -104,6 +104,15 @@
          {% endif %} <!-- end if seeds.genres -->
         </div>
          {% endif  %} <!-- end if seed exists -->
+         <a href="{% url 'playlist' %}"><button class="playlistbutton"></button></a>
+         <div>
+         {% if playlists %}
+        {% for playlist in playlists %}
+
+        {{playlist.name}}
+         {% endfor %}
+         {% endif %}
+        </div>
                 {% for track in recommend_results %}
                 <div class="song-cards">
                     <p class="text-left">{{ track.name }} - {{ track.artists.0.name }}</p>

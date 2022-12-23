@@ -1,9 +1,8 @@
 import spotipy
+from spotipy.oauth2 import SpotifyOAuth
 from spotipy.oauth2 import SpotifyClientCredentials
-
-
+import spotipy.util as util
 import os
-
 import googleapiclient.discovery
 
 
@@ -12,7 +11,11 @@ env = environ.Env()
 environ.Env.read_env()
 
 
-sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(), requests_timeout=10, retries=10)
+scope = "user-library-read playlist-modify-private playlist-modify-public"
+
+auth_manager = SpotifyOAuth(scope=scope, redirect_uri='http://127.0.0.1:5050/callback/')
+
+sp = spotipy.Spotify(auth_manager=auth_manager)
 
 
 # def play_audio(preview_url):

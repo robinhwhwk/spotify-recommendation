@@ -16,4 +16,6 @@ urlpatterns = [
     path('recommendation/tracks/', views.recommend_tracks, name='recommend-tracks'),
     path('artists/', views.ArtistView.as_view(), name='artists'),
     path('artists/<str:artistId>', views.ArtistView.as_view(), name='artists'),
+    path('playlist/', views.PlaylistView.as_view(), name='playlist'),
+    path('/callback/', views.PlaylistView.as_view(), name='callback'),
 ]

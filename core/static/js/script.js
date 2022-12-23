@@ -233,13 +233,33 @@ window.addEventListener('click', (e) => {
                   ytbutton.dataset.channelId = channelId;
                 }
             });
-        } else {
-          window.open('https://www.youtube.com/watch?v=' + ytbutton.dataset.videoId);
-        }
+          } else {
+            window.open('https://www.youtube.com/watch?v=' + ytbutton.dataset.videoId);
+          }
         
       }
   })
 }
+
+  // const playlistbutton = document.querySelector('.playlistbutton')
+  // if (playlistbutton) {
+  //   if (playlistbutton.contains(e.target)) {
+  //     console.log('click  ')
+  //   fetch('/core/playlist/', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFTOKEN': Cookies.get('csrftoken'),
+  //     },
+  //   })
+  // .then((response) => response.json())
+  // .then((data) => {
+  //     // Extract the auth url
+  //     const auth_url = data.auth_url;
+  //     window.open(auth_url)
+  // });
+  //   }
+  // }
 
 });
 
@@ -280,4 +300,20 @@ function removeSeed(trackId=null, artistId=null, genre=null) {
     seed.remove();
     xbutton.remove();
   }
+}
+
+function AuthorizeUser() {
+  fetch('/core/playlist/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFTOKEN': Cookies.get('csrftoken'),
+    },
+  })
+.then((response) => response.json())
+.then((data) => {
+    // Extract the auth url
+    const auth_url = data.auth_url;
+    window.open(auth_url)
+});
 }

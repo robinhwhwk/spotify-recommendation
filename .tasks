@@ -3,10 +3,13 @@ To Do:
         ✔ Make a rolling search @done (12/19/2022, 3:43:47 AM)
         ✔ Make boxes for seed tracks @done (12/20/2022, 2:48:07 AM)
         ✔ When you click on the song cards, add it to the seed list @done (12/20/2022, 2:48:14 AM)
-        ☐ When you click on an artist name, go to their page
+        ✔ When you click on an artist name, go to their page @done (12/22/2022, 4:13:16 PM)
         ✔ Make recommendation based on seeds work @done (12/21/2022, 4:20:45 AM)
     Catalogue:
-        ☐ Keep a catalogue of artists
+        ✔ Keep a catalogue of artists @done (12/22/2022, 6:28:29 PM)
         ☐ Optional: Keep a catalogue of songs 
-        ☐ Add a button where you can recommend based on an artist
+        ✔ Add a button where you can recommend based on an artist @done (12/22/2022, 6:28:33 PM)
         ✔ Make the youtube button on artists go to their channel @done (12/22/2022, 3:15:58 AM)
+        ✔ for each artist, keep a tab of top tracks and recommendations based on the artist @done (12/22/2022, 6:28:40 PM)
+        ☐ In recommendation results, add 'Save as Playlist in Spotify' button - requires user authorization
+        ☐ In recommendation results, add amazon music and apple music buttons

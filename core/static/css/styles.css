@@ -113,6 +113,15 @@ input {
   cursor: pointer;
 }
 
+.playlistbutton {
+  background: url(images/playlistbutton.png) no-repeat;
+  background-size: contain;
+  height: 3.125rem; /* 50px converted to rem */
+  width: 6.25rem; /* 100px converted to rem */
+  margin: 0.625rem; /* 10px converted to rem */
+  border: none;
+}
+
 .label {
   max-width: fit-content;
   height: 1.25rem; /* 20px converted to rem */
@@ -353,6 +362,8 @@ header {
   display: grid;
   grid-template-columns: 100%;
   gap: 1.25rem;
+  justify-content: center;
+  justify-items: center;
 }
 
 #search-results .song-cards:hover{
@@ -419,7 +430,7 @@ img {
 
 @media only screen and (min-width: 1200px) {
   .grid {
-    grid-template-columns: 23% 23% 23% 23%;
+    grid-template-columns: 15% 15% 15% 15%;
     gap: 3rem;
   }
   .container {
@@ -533,4 +544,24 @@ input.search-form {
 
 .text-center {
   text-align: center;
+}
+
+#tabs {
+  display: flex;
+}
+.tab-button {
+  flex: 1;
+  background: #ccc;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.tab-button.active {
+  background: #fff;
+}
+.tab-content {
+  display: none;
+}
+.tab-content.active {
+  display: block;
 }

@@ -3,6 +3,8 @@
 <title>J-pop Recommender</title>
 {% endblock %} 
 {% block content %}
+{% load static %}
+<script src="{% static 'js/tabs.js'%}"></script>
 </head>
 <body>
     <div class="container">
@@ -53,6 +55,104 @@
                             {% endif %}
                         </p>
                     </div>
+                </div>
+                <div class="info-artist">
+                    <div id="tabs">
+                        <button class="tab-button active" data-tab="top-tracks">Top Tracks</button>
+                        <button class="tab-button" data-tab="recommendations">Recommendations</button>
+                      </div>
+                      
+                      <!-- Top tracks tab -->
+                      <div id="top-tracks" class="tab-content active">
+                        {% if toptracks %}
+                        {% for track in toptracks %}
+                        <!-- If the data is from spotify api -->
+                        {% if track.artists.0.name %}
+                        <div class="song-cards">
+                            <p class="text-left">{{ track.name }} - {{ track.artists.0.name }}</p>
+                            <div class="grid-container">
+                                <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
+                                <div class="button-container">
+                                    {% if track.preview_url %}
+                                    <div>
+                                    <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
+                                    </div>
+                                    {% else %}
+                                    {% load static %}
+                                    <div class="nabutton bottom"></div>
+                                    {% endif %}
+                                    <div>
+                                    <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
+                                    </div>
+                                    <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artists.0.name }}" 
+                                    data-video-id="" method="post">
+                                    {% csrf_token %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <!-- If the data is from our database -->
+                        <div class="song-cards">
+                            <p class="text-left">{{ track.name }} - {{ track.artist }}</p>
+                            <div class="grid-container">
+                                <img src="{{ track.image_url }}" alt="" height="100" width="100">
+                                <div class="button-container">
+                                    {% if track.preview_url %}
+                                    <div>
+                                    <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
+                                    </div>
+                                    {% else %}
+                                    {% load static %}
+                                    <div class="nabutton bottom"></div>
+                                    {% endif %}
+                                    <div>
+                                    <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>
+                                    </div>
+                                    <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artist }}" 
+                                    data-video-id="" method="post">
+                                    {% csrf_token %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %} 
+                      </div> <!-- end top tracks -->
+                      
+                      <!-- Recommendations tab -->
+                      <div id="recommendations" class="tab-content">
+                        {% if recommendations %}
+                        {% for track in recommendations %}
+                        <!-- Recommendation data is always from spotify api -->
+                        <div class="song-cards">
+                            <p class="text-left">{{ track.name }} - {{ track.artists.0.name }}</p>
+                            <div class="grid-container">
+                                <img src="{{ track.album.images.0.url }}" alt="" height="100" width="100">
+                                <div class="button-container">
+                                    {% if track.preview_url %}
+                                    <div>
+                                    <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
+                                    </div>
+                                    {% else %}
+                                    {% load static %}
+                                    <div class="nabutton bottom"></div>
+                                    {% endif %}
+                                    <div>
+                                    <a href="{{ track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
+                                    </div>
+                                    <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artists.0.name }}" 
+                                    data-video-id="" method="post">
+                                    {% csrf_token %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %} 
+                      </div>
+                      
                 </div>
             {% endif %}
     </div>

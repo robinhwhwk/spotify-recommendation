@@ -21,6 +21,9 @@ def save_playlist(playlist, playlist_id=None, artist_id=None):
         if not Songs.objects.filter(id=id).exists():
             song = Songs(id, name, artist, spotify_link, preview_url, None, playlist_id, index, image_url, artist_id=artist_id, popularity=popularity)
             song.save()
+        else:
+            song = Songs.objects.filter(id=id)
+            song.update(playlist_id=playlist_id, playlist_rank=index)
 
 def save_tracks(tracks, artist_id=None):
     if not tracks: 
@@ -42,7 +45,6 @@ def save_tracks(tracks, artist_id=None):
             song.save()
         # just updating artist_id of existing song
         elif artist_id:
-            print('updating artist id')
             song = Songs.objects.filter(id=id)
             song.update(artist_id=Artists.objects.get(id=artist_id))    
 

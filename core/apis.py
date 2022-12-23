@@ -8,7 +8,7 @@ import googleapiclient.discovery
 
 scope = "user-library-read playlist-modify-private playlist-modify-public"
 
-auth_manager = SpotifyOAuth(scope=scope, redirect_uri='http://127.0.0.1:5050/callback/')
+auth_manager = SpotifyOAuth(scope=scope, client_id=os.environ.get('SPOTIPY_CLIENT_ID'), client_secret=os.environ.get('SPOTIPY_CLIENT_SECRET'))
 
 sp = spotipy.Spotify(auth_manager=auth_manager)
 

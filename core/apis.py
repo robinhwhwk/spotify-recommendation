@@ -6,11 +6,6 @@ import os
 import googleapiclient.discovery
 
 
-import environ
-env = environ.Env()
-environ.Env.read_env()
-
-
 scope = "user-library-read playlist-modify-private playlist-modify-public"
 
 auth_manager = SpotifyOAuth(scope=scope, redirect_uri='http://127.0.0.1:5050/callback/')
@@ -37,7 +32,7 @@ api_version = "v3"
 # Get credentials and create an API client
 
 youtube = googleapiclient.discovery.build(
-    api_service_name, api_version, developerKey=env("YT_KEY_2"))
+    api_service_name, api_version, developerKey=os.environ("YOUTUBE_KEY"))
 
 def search_youtube(query, type='track'):
     request = youtube.search().list(

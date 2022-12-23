@@ -31,7 +31,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = ["web-production-c03d.up.railway.app", '127.0.0.1']
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
@@ -126,7 +126,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+CSRF_TRUSTED_ORIGINS = ['https://web-production-c03d.up.railway.app']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

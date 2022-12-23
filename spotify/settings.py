@@ -90,7 +90,7 @@ DATABASES = {
     'NAME': os.environ.get("DB_NAME", 'spotify'),
     'USER': os.environ.get("DB_USER", 'postgres'),
     'PASSWORD': os.environ.get("DB_PASSWORD", 'rkrk0910'),
-    'HOST': os.environ.get("DB_HOST", '127.0.0.1'),
+    'HOST': os.environ.get("DB_HOST", '0.0.0.0'),
     'PORT': os.environ.get("DB_PORT", 5432),
 }
 }

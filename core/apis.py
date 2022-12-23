@@ -32,7 +32,7 @@ api_version = "v3"
 # Get credentials and create an API client
 
 youtube = googleapiclient.discovery.build(
-    api_service_name, api_version, developerKey=os.environ("YOUTUBE_KEY"))
+    api_service_name, api_version, developerKey=os.environ.get("YOUTUBE_KEY"))
 
 def search_youtube(query, type='track'):
     request = youtube.search().list(

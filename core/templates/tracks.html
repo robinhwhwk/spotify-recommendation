@@ -91,7 +91,6 @@
     <!-- We send recommend-results over to recommendations.html on song generate -->
     <div class="recommend-results">
         {% if recommend_results %}
-            {% if seeds %}
             <div class="seeds-info">
             <h3>Recommendations based on:</h3>
             {% if seeds.seedTracks %}
@@ -104,7 +103,6 @@
             <h2>Genres:</h2>
             {% endif %} <!-- end if seeds.genres -->
             </div>
-            {% endif  %} <!-- end if seed exists -->
          <!-- <a href="{% url 'playlist' %}"><button class="playlistbutton"></button></a>
          <div> -->
             <!-- Placeholder for adding playlist for user -->

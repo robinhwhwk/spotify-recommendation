@@ -1,12 +1,33 @@
 $(window).on('load', ()=> {
     $('#btn_submit').click(()=> {
         const seedlist = document.querySelector('.seed-list')
-        const seedArtists = seedlist.dataset.seedArtists
-        const seedTracks = seedlist.dataset.seedTracks
-        const seedGenres = seedlist.dataset.seedGenres
-        if (seedArtists.length==0 && seedTracks.length==0 && seedGenres.length==0) {
+
+        const artistlist = seedlist.querySelectorAll('[data-is-track="artist"]')
+        const genrelist = seedlist.querySelectorAll('[data-is-track="genre"]')
+        const tracklist = seedlist.querySelectorAll('[data-is-track="track"]')
+
+        if (tracklist.length<1 && genrelist.length<1 && artistlist.length<1) {
             return;
         }
+
+        let track_ids = []
+        tracklist.forEach(track => {
+            track_ids.push(track.dataset.trackId)
+        })
+        let artist_ids = []
+        artistlist.forEach(artist => {
+            artist_ids.push(artist.dataset.artistId)
+        })
+        let genrenames = []
+        genrelist.forEach(genre => {
+            genrenames.push(genre.dataset.nameGenre)
+        })
+
+        track_ids = track_ids.join(',')
+        artist_ids = artist_ids.join(',')
+        genrenames = genrenames.join(',')
+
+
         $.ajaxSetup({
             headers: {
                 'X-CSRFTOKEN': Cookies.get('csrftoken'),
@@ -16,9 +37,9 @@ $(window).on('load', ()=> {
             type: 'POST',
             url: "/core/recommendation/tracks/",
             data: JSON.stringify({
-                'seedArtists' : seedArtists,
-                'seedTracks' : seedTracks,
-                'seedGenres' : seedGenres,
+                'seedArtists' : artist_ids,
+                'seedTracks' : track_ids,
+                'seedGenres' : genrenames,
             }),
             success: (function(response) {
                 const html = response
@@ -79,87 +100,4 @@ $(window).on('load', ()=> {
             )
         })
     })
-    // const seedlist = document.querySelector('.seed-list')
-    // if (seedlist) {
-    //         let tracks = seedlist.dataset.seedTracks;
-    //         tracks = tracks.split(',')
-    //         console.log(tracks)
-    //         tracks.forEach(track => {
-    //         if (track.length > 1) {
-    //             const template = document.querySelectorAll('template')[0];
-    //             const div = template.content.querySelector('div')
-    //             const span  = template.content.querySelector('span')
-    //             const clone = document.importNode(div, true);
-    //             const xbutton = document.importNode(span, true)
-    
-    //             clone.dataset.nameTrack = seedlist.dataset.nameTrack;
-    //             clone.dataset.nameArtist = seedlist.dataset.nameArtist;
-    //             clone.dataset.trackId = track
-    //             clone.dataset.artistId = seedlist.dataset.artistId;
-    
-    //             clone.textContent = clone.dataset.nameTrack + '-' + clone.dataset.nameArtist;
-    
-    //             xbutton.dataset.trackId = seedlist.dataset.trackId;
-    
-    //             xbutton.addEventListener('click', ()=> {
-    //                 removeSeed(trackId=track);
-    //             });
-    //             seedlist.appendChild(clone);
-    //             seedlist.appendChild(xbutton);
-    //         }
-    //     });
-    // }
-    //     if (seedlist) {
-    //         let artists = seedlist.dataset.seedArtists;
-    //         artists = artists.split(',')
-    //         artists.forEach(artist => {
-    //             if (artist.length > 1) {
-    //                 const template = document.querySelectorAll('template')[0];
-    //                 const div = template.content.querySelector('div')
-    //                 const span  = template.content.querySelector('span')
-    //                 const clone = document.importNode(div, true);
-    //                 const xbutton = document.importNode(span, true)
-        
-    //                 clone.dataset.nameArtist = seedlist.dataset.nameArtist;
-    //                 clone.dataset.artistId = artist;
-          
-    //                 clone.textContent = clone.dataset.nameArtist;
-          
-    //                 xbutton.addEventListener('click', ()=> {
-    //                    removeSeed(artistId=artist);
-    //                 });
-    //                 seedlist.appendChild(clone);
-    //                 seedlist.appendChild(xbutton);
-    //             }
-                
-    //         });
-    //     }
-    
-    //     if (seedlist) {
-    //         let genres = seedlist.dataset.seedGenres;
-    //         genres = genres.split(',')
-    //         genres.forEach(genre => {
-    //             if (genre.length > 1) {
-    //                 const template = document.querySelectorAll('template')[0];
-    //                 const div = template.content.querySelector('div')
-    //                 const span  = template.content.querySelector('span')
-    //                 const clone = document.importNode(div, true);
-    //                 const xbutton = document.importNode(span, true)
-        
-    //                 clone.dataset.nameGenre = seedlist.dataset.nameGenre;
-            
-    //                 clone.textContent = clone.dataset.nameGenre;
-        
-    //                 xbutton.dataset.nameGenre == seedlist.dataset.nameGenre;
-        
-    //                 xbutton.addEventListener('click', ()=> {
-    //                 removeSeed(genre=genre);
-    //                 });
-    //                 seedlist.appendChild(clone);
-    //                 seedlist.appendChild(xbutton);
-    //             }
-                
-    //         });
-    //     }
-    
 })

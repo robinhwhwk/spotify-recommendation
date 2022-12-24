@@ -1,4 +1,5 @@
 window.onload = () => {
+  
   const searchfield = document.getElementById("search-field");
   const csrftoken = Cookies.get("csrftoken");
   const dropdownmenu = document.getElementById("myDropdown");
@@ -108,15 +109,18 @@ window.addEventListener("click", (e) => {
   const containers = document.querySelectorAll(".container");
   const songcards = document.querySelectorAll(".song-cards");
   const body = document.querySelector("body");
-  const logo = document.querySelector(".logo");
-  const navbar = document.querySelector(".navbar ul");
+  // const logo = document.querySelector(".logo");
+  const navbar = document.querySelector(".navbar");
   if (lightbutton.contains(e.target)) {
     if (lightbutton.classList.contains("light")) {
       localStorage.setItem("light", false);
       lightbutton.classList.toggle("light");
-      navbar.classList.toggle("light");
+      navbar.classList.remove("navbar-light");
+      navbar.classList.remove("bg-light");
+      navbar.classList.add("navbar-dark");
+      navbar.classList.add("bg-dark");
       body.classList.toggle("light");
-      logo.classList.toggle("light");
+      // logo.classList.toggle("light");
       containers.forEach((container) => {
         container.classList.toggle("light");
       });
@@ -128,9 +132,12 @@ window.addEventListener("click", (e) => {
     } else {
       localStorage.setItem("light", true);
       lightbutton.classList.toggle("light");
-      navbar.classList.toggle("light");
+      navbar.classList.remove("navbar-dark");
+      navbar.classList.remove("bg-dark");
+      navbar.classList.add("navbar-light");
+      navbar.classList.add("bg-light");
       body.classList.toggle("light");
-      logo.classList.toggle("light");
+      // logo.classList.toggle("light");
       containers.forEach((container) => {
         container.classList.toggle("light");
       });
@@ -379,6 +386,7 @@ function removeSeed(trackId = null, artistId = null, genre = null) {
     seed.remove();
     xbutton.remove();
   }
+
 }
 
 function AuthorizeUser() {

@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 # DEBUG = os.getenv("DEBUG", "False") == "True"
 DEBUG = True
 
-ALLOWED_HOSTS = ["web-production-c03d.up.railway.app", '127.0.0.1', 'jpopify.com', 'https://jpopify.com']
+ALLOWED_HOSTS = ["web-production-c03d.up.railway.app", '127.0.0.1', 'jpopify.com', 'https://jpopify.com', 'www.jpopify.com']
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 # DEVELOPMENT_MODE = True
@@ -128,7 +128,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-c03d.up.railway.app', 'https://jpopify.com', 'jpopify.com', 'www.jpopify.com']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-c03d.up.railway.app', 'https://jpopify.com', 'http://jpopify.com']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

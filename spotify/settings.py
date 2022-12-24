@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&
 # DEBUG = os.getenv("DEBUG", "False") == "True"
 DEBUG = True
 
-ALLOWED_HOSTS = ["web-production-c03d.up.railway.app", '127.0.0.1', 'jpopify.com']
+ALLOWED_HOSTS = ["web-production-c03d.up.railway.app", '127.0.0.1', 'jpopify.com', 'https://jpopify.com']
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 # DEVELOPMENT_MODE = True
@@ -89,10 +89,10 @@ WSGI_APPLICATION = 'spotify.wsgi.application'
 DATABASES = {
 'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': os.environ.get("DB_NAME", 'spotify'),
-    'USER': os.environ.get("DB_USER", 'postgres'),
-    'PASSWORD': os.environ.get("DB_PASSWORD", 'rkrk0910'),
-    'HOST': os.environ.get("DB_HOST", '8.8.8.8'),
+    'NAME': os.environ.get("DB_NAME"),
+    'USER': os.environ.get("DB_USER"),
+    'PASSWORD': os.environ.get("DB_PASSWORD"),
+    'HOST': os.environ.get("DB_HOST", '0.0.0.0'),
     'PORT': os.environ.get("DB_PORT", 5432),
 }
 }

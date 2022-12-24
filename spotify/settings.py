@@ -128,7 +128,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-CSRF_TRUSTED_ORIGINS = ['https://web-production-c03d.up.railway.app', 'https://jpopify.com', 'http://jpopify.com']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-c03d.up.railway.app', 'http://jpopify.com', 'https://jpopify.com', 'https://www.jpopify.com', 'http://www.jpopify.com']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

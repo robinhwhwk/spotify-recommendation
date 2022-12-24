@@ -10,17 +10,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="search-container">
         <header>Similar Songs Generator</header>
         <p>Select up to 5 combinations of songs, artists, and genres.</p>
-        <div class="seed-list" data-seed-artists='{{seed_artists}}', data-seed-tracks='{{seed_tracks}}', data-seed-genres='{{seed_genres}}'> 
-            <template>
-                <div id="search-keyword" data-seed-index="" data-is-track="", data-name-track="", data-name-artist="",
-                data-track-id="", data-artist-id="", data-genre-name="">
-            </div>
-            <span id="seed-remover" data-seed-index="" data-track-id="" data-artist-id="" data-genre-name="">X</span>
-            </template>
-        </div> <!-- end seed list -->
+        <div class="search-container">
         <div class="search_wrapper">
             <div class="child">
                 <input class="search-form" name="q" type="text" id="search-field" placeholder="Search..." autocomplete="off">
@@ -34,12 +26,11 @@
                 </div>
             </div>
             <div class="child">
-                <button id="btn_submit">
+                    <button id="btn_submit">
                     Generate
                     {% csrf_token %}
-                </button>
-            </a>
-            </div>    
+                    </button>  
+            </div>       
         </div> 
         <div class="dropdown-wrapper">
         <div id="search-results" data-returned="false">
@@ -87,23 +78,33 @@
         </div>
     </div><!-- end search wrapper -->
     </div><!-- end search container -->
+    <hr>
+    <div class="seed-list" data-seed-artists='', data-seed-tracks='', data-seed-genres=''> 
+        <template>
+            <div id="search-keyword" data-seed-index="" data-is-track="", data-name-track="", data-name-artist="",
+            data-track-id="", data-artist-id="", data-genre-name="">
+        </div>
+        <span id="seed-remover" data-seed-index="" data-track-id="" data-artist-id="" data-genre-name="">X</span>
+        </template>
+    </div> <!-- end seed list -->
+    
+    <!-- We send recommend-results over to recommendations.html on song generate -->
     <div class="recommend-results">
         {% if recommend_results %}
-        {% if seeds %}
-        <div class="seeds-info">
-        <h3>Recommendations based on:</h3>
-        {% if seeds.seedTracks %}
-         <p>Songs: 
-         </p>
-         {% endif %} <!-- end if seeds.tracks -->
-         {% if seeds.seedArtists %}
-         <p>Artists:</p>
-        {% endif %} <!-- end if seeds.artists -->
-        {% if seeds.seedGenres %}
-         <p>Genres:</p>
-         {% endif %} <!-- end if seeds.genres -->
-        </div>
-         {% endif  %} <!-- end if seed exists -->
+            {% if seeds %}
+            <div class="seeds-info">
+            <h3>Recommendations based on:</h3>
+            {% if seeds.seedTracks %}
+            <h2>Songs: </h2>
+            {% endif %} <!-- end if seeds.tracks -->
+            {% if seeds.seedArtists %}
+            <h2>Artists:</h2>
+            {% endif %} <!-- end if seeds.artists -->
+            {% if seeds.seedGenres %}
+            <h2>Genres:</h2>
+            {% endif %} <!-- end if seeds.genres -->
+            </div>
+            {% endif  %} <!-- end if seed exists -->
          <!-- <a href="{% url 'playlist' %}"><button class="playlistbutton"></button></a>
          <div> -->
             <!-- Placeholder for adding playlist for user -->

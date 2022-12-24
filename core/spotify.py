@@ -54,93 +54,50 @@ def generate_mood_playlist(mood):
     if not mood:
         return
 
-    seed_genres = ['j-pop', 'j-dance', 'j-idol']
-
     ranges = {
         'Happy': {
+            'seed_genres' : ['j-pop', 'j-dance', 'j-idol', 'anime', 'happy'],
             'market':'JP',
             'limit': 20,
-            'max_danceability': 1,
-            'max_energy': 1,
-            'max_valence' : 1,
-            'min_danceability': 0.6,
-            'min_energy' : 0.6,
-            'min_valence' : 0.8,
         },
         'Sad': {
+            'seed_genres' : ['j-pop', 'j-dance', 'j-idol', 'anime', 'sad'],
             'market':'JP',
             'limit': 20,
-            'min_valence':0.0,
-            'max_valence': 0.4,
-            'min_energy':0.2,
-            'max_energy': 0.4,
-            'min_acousticness':0.5,
-            'max_acousticness':1.0,
-            'min_instrumentalness':0.0,
-            'max_instrumentalness':0.2,
         },
-        'Angry': {
+        'Rainy': {
+            'seed_genres' : ['j-pop', 'j-dance', 'j-idol', 'anime', 'rainy-day'],
             'market':'JP',
             'limit': 20,
-            'min_acousticness': 0.0,
-            'max_acousticness': 0.3,
-            'min_energy': 0.6,
-            'max_energy': 1.0,
-            'min_instrumentalness': 0.0,
-            'max_instrumentalness': 0.4,
-            'min_key': 3,
-            'max_key': 8,
-            'min_liveness': 0.0,
-            'max_liveness': 0.3,
-            'min_loudness': -10.0,
-            'max_loudness': 0.0,
-            'min_tempo': 140.0,
-            'max_tempo': 190.0,
-            'min_valence': 0.0,
-            'max_valence': 0.5
         },
         'Relaxed': {
+            'seed_genres' : ['j-pop', 'j-dance', 'j-idol', 'anime', 'chill'],
             'market':'JP',
             'limit': 20,
-            'min_acousticness': 0.4,
-            'min_danceability': 0.1,
-            'max_danceability': 0.5,
-            'max_energy': 0.4,
         },
         'Bored': {
+            'seed_genres' : ['j-pop', 'j-dance', 'j-idol', 'anime', 'ambient'],
             'market':'JP',
             'limit': 20,
-            'min_valence': 0.1,
-            'max_energy': 0.2
         },
         'Nostalgic': {
+            'seed_genres' : ['j-pop', 'j-dance', 'j-idol', 'anime', 'blues'],
             'market':'JP',
             'limit': 20,
-            'min_acousticness': 0.5,
-            'max_acousticness': 0.9,
-            'max_danceability': 0.5,
-            'min_energy': 0.1,
-            'max_energy': 0.4,
-            'max_liveness': 0.5,
-            'min_valence': 0.4,
-            'max_energy': 0.6
         },
-        'Anxious': {
+        'Workout': {
+            'seed_genres' : ['j-pop', 'j-dance', 'j-idol', 'anime', 'work-out'],
             'market':'JP',
             'limit': 20,
-            'min_valence': 0.1,
-            'max_energy': 0.4
         },
         'Lonely': {
+            'seed_genres' : ['j-pop', 'j-idol', 'anime', 'folk', 'jazz'],
             'market':'JP',
             'limit': 20,
-            'min_valence': 0.1,
-            'max_energy': 0.2,
-            'min_acousticness': 0.4,
         }
     }
     params = ranges[mood]
-    results = sp.recommendations(seed_genres=seed_genres, **params) 
+    results = sp.recommendations(**params) 
 
     return results['tracks']
     

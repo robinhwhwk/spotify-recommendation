@@ -6,7 +6,9 @@
 </head>
 <body>
     <div class="container">
-        <header>Songs Generated Based on Your Mood</header>
+        <header>Songs Generated Based on Your Mood:</header>
+        <h3>{{ mood }}</h3>
+        <img class="{{ mood }}" id="bigimage" alt="">
         {% if tracks %}
             {% for track in tracks %}
             <div class="song-cards">

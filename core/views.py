@@ -19,7 +19,7 @@ from django.views.decorators.csrf import csrf_protect, csrf_exempt
 # Create your views here.
 
 class IndexView(View):
-    moods = ['Happy', 'Sad', 'Angry', 'Relaxed', 'Bored', 'Nostalgic', 'Anxious', 'Lonely']
+    moods = ['Happy', 'Sad', 'Rainy', 'Relaxed', 'Bored', 'Nostalgic', 'Workout', 'Lonely']
     
     def get(self, request):
         # return the list of tracks based on moods 
@@ -98,6 +98,7 @@ class MoodTracksView(View):
         save_tracks(tracks)
         context = {
             'tracks': tracks,
+            'mood' : mood,
         }
         return render(request, 'moodtracks.html', context=context)
 
@@ -137,6 +138,38 @@ def youtube(request):
 @csrf_protect
 def recommend_tracks(request):
     if request.method == 'POST':
+        # tracks = request.GET.get('tracks')
+        # artists = request.GET.get('artists')
+        # genres = request.GET.get('genres')
+        # seed_tracks = tracks.split(',') if tracks else ''
+        # seed_artists= artists.split(',') if artists else ''
+        # seed_genres = genres.split(',') if genres else ''
+
+        # results = sp.recommendations(seed_artists=seed_artists, seed_tracks=seed_tracks, seed_genres=seed_genres, country='JP')
+
+        # seeds = {}
+        # if seed_tracks:
+        #     seeds['seedTracks'] = seed_tracks
+        # if seed_artists:
+        #     seeds['seedArtists'] = seed_artists
+        # if seed_genres:
+        #     seeds['seedGenres'] = seed_genres
+        # context = {
+        #     'recommend_results': results['tracks'],
+        #     'seeds': seeds,
+        # }
+        # return render(request, 'tracks.html', context=context)
+
+        # seed_tracks = request.POST.get('seed-tracks').split(',')
+        # seed_artists = request.POST.get('seed-artists').split(',')
+        # seed_genres = request.POST.get('seed-genres').split(',')
+        # print(seed_tracks)
+        # results = sp.recommendations(seed_artists=seed_artists, seed_tracks=seed_tracks, seed_genres=seed_genres, country='JP')
+        # context = {
+        #      'recommend_results': results['tracks'],
+        # }
+        # return render(request, 'tracks.html', context=context)
+
         data = json.loads(request.body)
         seed_tracks = data['seedTracks'].split(',')
         seed_artists = data['seedArtists'].split(',')
@@ -167,7 +200,7 @@ class ArtistView(View):
         if not artistId:
             # if the artist list was updated in the past day, fetch that data
             if ArtistList.objects.filter(name=self.artist_list_name,last_updated=self.current_date).exists():
-                artists = ArtistList.objects.filter(name=self.artist_list_name,last_updated=self.current_date)[0].artist.all()
+                artists = ArtistList.objects.filter(name=self.artist_list_name,last_updated=self.current_date)[0].artist.all().order_by('-popularity')
                 # if the artist list is empty, search spotify
                 if not artists:
                     query = 'genre:j-pop'
@@ -186,6 +219,7 @@ class ArtistView(View):
                     return render(request, 'artists.html', context=context)
                 # if the artist list is not empty
                 else:
+                    print('here')
                     context = {
                         'artists': artists,
                     }

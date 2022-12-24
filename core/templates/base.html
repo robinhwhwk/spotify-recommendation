@@ -18,23 +18,24 @@
     
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
     <link rel="icon" href="{% static 'css/images/favicon_io/favicon-32x32.png' %}">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
     <script src="{% static 'js/audio.js' %}"></script>
-    
     <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/lightmode.js' %}"></script>
   </head>
   <body>
           {% block sidebar %}
           <div class="navbar">
             <ul>
-              <li><a href="{% url 'index' %}">Home</a></li>
+              <a class="logo" href="{% url 'index' %}"></a>
               <li><a href="{% url 'popular' %}">Popular Songs</a></li>
               <li><a href="{% url 'recommendation' %}">Similar Songs</a></li>
               <li><a href="{% url 'artists' %}">Top Artists</a></li>
+              <li class="lightmode"></li>
             </ul>
           </div>
           <hr />
           {% endblock %}
-        </div>
         {% block content %}{% endblock %}
   </body>
 

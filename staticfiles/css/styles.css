@@ -4,7 +4,31 @@ html {
 }
 
 body {
-  background-color: #1DB954;
+  background-color: black;
+  margin: 0;
+}
+
+body.light {
+  background-color: #87D34E;
+}
+
+.logo {
+  background:  url('images/dalle-logo4.png') no-repeat;
+  background-size: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-right: 1rem;
+}
+
+.logo.light {
+  background:  url('images/dalle-logo3.png') no-repeat;
+  background-size: 3.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.logo a:hover {
+  cursor: pointer;
 }
 
 .container {
@@ -14,8 +38,14 @@ body {
   justify-items: center;
   flex-direction: column;
   padding: 1rem;
-  background-color: rgb(184, 227, 153);
+  background-color: rgb(44, 44, 44);
+  color: white;
   width: 100%;
+}
+
+.container.light {
+  background-color: white;
+  color: #111;
 }
 
 .search_wrapper {
@@ -37,15 +67,36 @@ input {
   font-size: 1rem;
 }
 
+.lightmode {
+  right: 1rem;
+  background: url('images/light-mode-icon.png') no-repeat;
+  background-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  float: right;
+  display: block;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+}
+
+.lightmode.light {
+  background:  url('images/dark-mode-icon.png');
+  background-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+}
+
 .song-cards {
   display: grid;
   align-items: center;
   border: .06rem solid #7e7c7c;
   border-bottom: 0;
   background-color: white;
-  width: 90%;
   height: fit-content;
+  color: #111;
 }
+
 
 .song-cards p {
   overflow: hidden;
@@ -57,11 +108,13 @@ input {
   /* width: 8.75rem; 
   height: 2.5rem; 
   margin-top: 0.625rem; */
+  background-color: mintcream;
   margin: 0;
   width: 100%;
   padding: 1rem;
   border: .06rem solid #7e7c7c;
   flex-grow: 1;
+  text-align: center;
 }
 
 .mouseover {
@@ -188,6 +241,13 @@ header {
   grid-template-columns: 1fr 4fr;
 }
 
+.navbar {
+  max-width: 100%;
+  min-width: 400px; 
+  left: 0;
+  right: 0;
+}
+
 .navbar ul {
   list-style-type: none;
   margin: 0;
@@ -199,6 +259,12 @@ header {
   width: 100%;
   z-index: 10000;
   display: inline-flex;
+  align-items: center;
+}
+
+.navbar ul.light {
+  background-color: white;
+  color: #111;
 }
 
 .navbar li {
@@ -213,8 +279,20 @@ header {
   text-decoration: none;
 }
 
+.navbar li .lightmode {
+  float: right;
+}
+
+.navbar .light li a {
+  color: #111;
+}
+
 .navbar li a:hover {
-  background-color: #111;
+  background-color: rgb(143, 143, 143);
+}
+
+.navbar .light li a:hover {
+  background-color: #7e7c7c;
 }
 
 .navbar .active {
@@ -247,112 +325,139 @@ header {
   background: #ccc;
 }
 
-@media screen and (max-width: 600px) {
-  .navbar .search-container {
-    float: none;
+@media only screen and (max-width: 600px) {
+
+  .navbar {
+    max-width: 100%;
+    min-width: 400px; 
+    left: 0;
+    right: 0;
+    display: flex;
   }
-  .navbar .search-container button {
+  .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
     width: 100%;
+    z-index: 10000;
+    display: inline-flex;
+    align-items: center;
   }
+  
+
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(184, 227, 153);
+    /* background-color: rgb(184, 227, 153); */
+    width: 100%;
     
   }
   img {
     margin: .2rem;
   }
+  #bigimage {
+    background-size: 15rem;
+    width: 15rem;
+    height: 15rem;
+  }
   p {
     margin: .2rem;
   }
   #search-results .song-cards {
-    margin-left: 3rem;
     width: 20rem;
   }
   .search_wrapper {
     width: 20rem;
   }
+
+  .logo {
+    background-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+  }
   
 }
 .Happy {
-  background: url(images/Happy.png) no-repeat;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+  background: url(images/dalle-happy.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
-  color: rgb(251, 227, 49);
+  color: black;
 }
 
 .Sad {
-  background: url(images/Sad.png) no-repeat;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+  background: url(images/dalle-sad.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
-  color: rgb(110, 110, 207);
+  color: rgb(55, 20, 88);
 }
 
 .Relaxed {
-  background: url(images/Relaxed.png) no-repeat;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+  background: url(images/dalle-relaxing.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
-  color: beige;
+  color: black;
 }
 
-.Anxious {
-  background: url(images/Anxious.png) no-repeat;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+.Workout {
+  background: url(images/dalle-workout.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
   color: lightgoldenrodyellow;
 }
 
-.Angry {
-  background: url(images/Angry.png) no-repeat;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+.Rainy {
+  background: url(images/dalle-rainy.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
-  color: red;
+  color: beige;
 }
 
 .Nostalgic {
-  background: url(images/Nostalgic.png) no-repeat;
-  opacity: 0.6;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+  background: url(images/dalle-nostalgic.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
   color:rgb(0, 0, 0);
 }
 
 .Bored {
-  background: url(images/Bored.png) no-repeat;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+  background: url(images/dalle-bored.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
-  color: rgb(214, 214, 214);
+  color: black;
 }
 
 .Lonely {
-  background: url(images/Lonely.png) no-repeat;
-  background-size: 12.5rem;
-  height: 8rem;
-  width: 12.5rem;
+  background: url(images/dalle-lonely.png) no-repeat;
+  background-size: 10rem;
+  height: 10rem;
+  width: 10rem;
   margin: 0.625rem;
   border: none;
   color: black;
@@ -417,6 +522,18 @@ img {
     width: 6.6rem;
     height: 6.6rem;
     margin: .5rem;
+  }
+
+  #bigimage {
+    background-size: 15rem;
+    width: 15rem;
+    height: 15rem;;
+    margin: .5rem;
+  }
+
+  #bigimage.genrepicture {
+    background: url('images/dalle-vibing.png');
+    background-size: 15rem;
   }
   
   p {
@@ -564,4 +681,9 @@ input.search-form {
 }
 .tab-content.active {
   display: block;
+}
+
+.seeds-info {
+  display: grid;
+  justify-items: center;
 }

@@ -30,6 +30,7 @@ class Songs(models.Model):
     image_url = models.CharField(max_length=500, null=True, blank=True)
     artist_id = models.ForeignKey('Artists', null=True, blank=True, related_name='toptracks', on_delete=models.SET_NULL)
     popularity = models.IntegerField(null=True, blank=True)
+    lyrics = models.TextField(null=True, blank=True)
 
     def __str__(self) -> str:
         return '%s - %s'.format(self.name, self.artist)

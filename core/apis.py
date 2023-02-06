@@ -4,6 +4,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
 import os
 import googleapiclient.discovery
+import requests
 
 
 scope = "user-library-read playlist-modify-private playlist-modify-public"
@@ -69,3 +70,16 @@ def get_genre_seeds(query):
             genres.append(genre)
     return genres
     
+
+
+def get_lyrics(track, artist):
+    url = 'https://api.musixmatch.com/ws/1.1/matcher.lyrics.get'
+    key = os.environ.get('MUSIXMATCH_KEY')
+    req = requests.get(url, params = {
+        "apikey": key,
+        "q_track": track,
+        "q_artist": artist,
+    })
+    results = req.json()
+    lyrics = results['message']['body']['lyrics']
+    return lyrics

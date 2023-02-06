@@ -135,6 +135,9 @@ def youtube(request):
                 channel_id = youtube_response['items'][0]['id']['channelId']
                 return JsonResponse({'channel_id': channel_id})
 
+
+### View for getting track recommendations ###
+
 @csrf_protect
 def recommend_tracks(request):
     if request.method == 'POST':
@@ -190,6 +193,8 @@ def recommend_tracks(request):
     if request.method == 'GET':
         return render(request,'tracks.html')
 
+
+### View for top artists and individual artists ###
 
 class ArtistView(View):
     current_date = date.today()
@@ -276,6 +281,7 @@ class ArtistView(View):
                 }
                 return render(request, 'artist.html', context=context)
 
+### View for creating a playlist ### 
 
 class PlaylistView(View):
     def get(self, request):
@@ -302,3 +308,31 @@ class PlaylistView(View):
             }
             return render(request, 'tracks.html', context=context)
 
+
+### View for Individual tracks ###
+
+class TrackView(View):
+    def get(self, request, trackId):
+        if Songs.objects.filter(id=trackId).exists():
+            # if the song already exists in our database
+            track = Songs.objects.filter(id=trackId)[0]
+            lyrics = get_lyrics(track.name, track.artist)
+            context = {
+                'track': track,
+                'lyrics': lyrics,
+            }
+            return render(request, 'track.html', context=context)
+        else:
+            # if the song doesn't exist in our database
+            track = sp.track(trackId)
+            lyrics = get_lyrics(track['name'], track['artists'][0]['name'])
+            album_id = track['album']['id']
+            album = sp.album(album_id=album_id)['tracks']['items']
+            recommendations = sp.recommendations(seed_tracks=trackId)['tracks']
+            context = {
+                'spotify_track': track,
+                'lyrics': lyrics,
+                'album' : album,
+                'recommendations' : recommendations,
+            }
+            return render(request, 'track.html', context=context)

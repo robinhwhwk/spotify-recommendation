@@ -1,67 +1,116 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% block title %}
 <title>J-pop Recommender</title>
-{% endblock %} 
+{% endblock %}
 {% block content %}
 </head>
+
 <body>
     <div class="container">
+        <p class="text-center">Search your favorite tracks, artists or genres.</p>
+        <div class="search-container">
+            <div class="search_wrapper">
+                <div class="child">
+                    <input class="search-form" name="q" type="text" id="search-field" placeholder="Search..."
+                        autocomplete="off">
+                </div>
+                <div class="dropdown child">
+                    <button name="dropdownbtn" class="dropbtn">Song</button>
+                    <div id="myDropdown" class="dropdown-content" data-type="track">
+                        <a data-type="track">Song</a>
+                        <a data-type="artist">Artist</a>
+                        <a data-type="genre">Genre</a>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-wrapper">
+                <div id="search-results" data-returned="false">
+                        <div class="song-cards">
+                            <p class="text-left">{{ track.name }} - {{ track.artist }}</p>
+                            <div class="grid-container">
+                                <img src="{{ track.image_url }}" alt="" height="100" width="100">
+                                <div class="button-container">
+                                    {% if track.preview_url %}
+                                    <div>
+                                    <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
+                                    </div>
+                                    {% else %}
+                                    {% load static %}
+                                    <div class="nabutton bottom"></div>
+                                    {% endif %}
+                                    <div>
+                                    <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>
+                                    </div>
+                                    <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artist }}" 
+                                    data-video-id="" method="post">
+                                    {% csrf_token %}
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div> <!-- end search wrapper -->
+        </div> <!-- end search container -->
         <header class="text-left">Top 50 Japan</header>
-            <!-- If the tracks are not in our database, we use the spotify's json response to format our page. -->
-            {% if items %}
-                {% for track in items %}
-                <div class="song-cards">
-                    <p class="text-left">{{ forloop.counter }}. {{ track.track.name }} - {{ track.track.artists.0.name }}</p>
+        <!-- If the tracks are not in our database, we use the spotify's json response to format our page. -->
+        {% if items %}
+        {% for track in items %}
+        <div class="song-cards">
+            <p class="text-left">{{ forloop.counter }}. {{ track.track.name }} - {{ track.track.artists.0.name }}</p>
 
-                    <div class="grid-container">
-                        <img src="{{ track.track.album.images.0.url }}" alt="" height="100" width="100">
-                        <div class="button-container">
-                            {% if track.track.preview_url %}
-                            <div>
-                            <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.track.preview_url }}")' value="" title="Play a preview">
-                            </div>
-                            {% else %}
-                            {% load static %}
-                            <div class="nabutton bottom"></div>
-                            {% endif %}
-                            <div>
-                            <a href="{{ track.track.external_urls.spotify }}" target="_blank"><button class="spotifybutton"></button></a>
-                            </div>
-                            <form class="youtubebutton" data-title="{{ track.track.name }}" data-artist="{{ track.track.artists.0.name }}" 
-                            data-video-id="" method="post">
-                            {% csrf_token %}
-                            </form>
-                        </div>
+            <div class="grid-container">
+                <img src="{{ track.track.album.images.0.url }}" alt="" height="100" width="100">
+                <div class="button-container">
+                    {% if track.track.preview_url %}
+                    <div>
+                        <input type="button" class="playbutton bottom"
+                            onclick='playAudio("{{ track.track.preview_url }}")' value="" title="Play a preview">
                     </div>
-                </div>
-                {% endfor %}
-            {% endif %}
-            <!-- If the tracks are already in our database, we access the fields using the model 'Songs' -->
-            {% if tracks %}
-                {% for track in tracks %}
-                <div class="song-cards">
-                    <p class="text-left">{{ forloop.counter }}. {{ track.name }} - {{ track.artist }}</p>
-                    <div class="grid-container">
-                        <img src="{{ track.image_url }}" alt="" height="100" width="100">
-                        <div class="button-container">
-                            {% if track.preview_url %}
-                            <div>
-                            <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")' value="" title="Play a preview">
-                            </div>
-                            {% else %}
-                            {% load static %}
-                            <div class="nabutton bottom"></div>
-                            {% endif %}
-                            <div>
-                            <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>
-                            </div>
-                            <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artist }}" method="post">
-                            {% csrf_token %}
-                            </form>
-                        </div>
+                    {% else %}
+                    {% load static %}
+                    <div class="nabutton bottom"></div>
+                    {% endif %}
+                    <div>
+                        <a href="{{ track.track.external_urls.spotify }}" target="_blank"><button
+                                class="spotifybutton"></button></a>
                     </div>
+                    <form class="youtubebutton" data-title="{{ track.track.name }}"
+                        data-artist="{{ track.track.artists.0.name }}" data-video-id="" method="post">
+                        {% csrf_token %}
+                    </form>
                 </div>
-                {% endfor %}
-            {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- If the tracks are already in our database, we access the fields using the model 'Songs' -->
+        {% if tracks %}
+        {% for track in tracks %}
+        <div class="song-cards">
+            <p class="text-left">{{ forloop.counter }}. {{ track.name }} - {{ track.artist }}</p>
+            <div class="grid-container">
+                <img src="{{ track.image_url }}" alt="" height="100" width="100">
+                <div class="button-container">
+                    {% if track.preview_url %}
+                    <div>
+                        <input type="button" class="playbutton bottom" onclick='playAudio("{{ track.preview_url }}")'
+                            value="" title="Play a preview">
+                    </div>
+                    {% else %}
+                    {% load static %}
+                    <div class="nabutton bottom"></div>
+                    {% endif %}
+                    <div>
+                        <a href="{{ track.spotify_link }}" target="_blank"><button class="spotifybutton"></button></a>
+                    </div>
+                    <form class="youtubebutton" data-title="{{ track.name }}" data-artist="{{ track.artist }}"
+                        method="post">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
-{% endblock %}
+    {% endblock %}

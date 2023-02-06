@@ -17,4 +17,7 @@ urlpatterns = [
     path('artists/<str:artistId>', views.ArtistView.as_view(), name='artists'),
     path('playlist/', views.PlaylistView.as_view(), name='playlist'),
     path('callback/', views.PlaylistView.as_view(), name='callback'),
+    path('popular/tracks/<str:trackId>', views.TrackView.as_view(), name='tracks'),
+    path('tracks/<str:trackId>', views.TrackView.as_view(), name='tracks'),
+    path('tracks/', views.TrackView.as_view(), name='lyricsfinder'),
 ]

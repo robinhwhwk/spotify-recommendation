@@ -27,15 +27,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # Your secret key
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "False") == "True"
-# DEBUG = True
+# DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = ["web-production-c03d.up.railway.app", '127.0.0.1', 'jpopify.com', 'https://jpopify.com', 'www.jpopify.com']
 
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
-DEVELOPMENT_MODE = True
+# DEVELOPMENT_MODE = True
 
 
 # Application definition
@@ -93,7 +93,7 @@ DATABASES = {
     'USER': os.environ.get("DB_USER"),
     'PASSWORD': os.environ.get("DB_PASSWORD"),
     'HOST': os.environ.get("DB_HOST", '0.0.0.0'),
-    'PORT': os.environ.get("DB_PORT", 5432),
+    'PORT': os.environ.get("DB_PORT", 7399),
 }
 }
 
@@ -142,7 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # The URL to use when referring to static files (where they will be served from)
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

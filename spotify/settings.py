@@ -17,7 +17,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["127.0.0.1,localhost", "jpopify.com", "https://jpopify.com", "www.jpopify.com"].split(",")
+ALLOWED_HOSTS = ["127.0.0.1,localhost", "jpopify.com", "https://jpopify.com", "www.jpopify.com"]
 
 
 # Application definition

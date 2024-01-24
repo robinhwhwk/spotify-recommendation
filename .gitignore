@@ -10,3 +10,4 @@ youtube.js
 .cache
 tests.ipynb
 Dockerfile
+*.pyc

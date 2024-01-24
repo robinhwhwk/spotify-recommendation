@@ -12,13 +12,6 @@ body.light {
   background-color: #87D34E;
 }
 
-.logo {
-  background:  url('images/logo.png') no-repeat;
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
-}
-
 .logo.light {
   background:  url('images/dalle-logo3.png') no-repeat;
   background-size: 3rem;
@@ -237,7 +230,6 @@ header {
 
 
 @media only screen and (max-width: 600px) {
-
 
   .container {
     display: flex;
@@ -579,3 +571,11 @@ input.search-form {
 }
 
 .offcanvas-header{ display:none; }
+
+.navbar {
+  max-width: 100%;
+  min-width: 400px; 
+  left: 0;
+  right: 0;
+  position: inherit;
+}

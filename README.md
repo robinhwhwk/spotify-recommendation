@@ -1,4 +1,7 @@
 # Spotify Recommendation System
+<img width="1512" alt="spotify" src="https://github.com/user-attachments/assets/1422b312-b9d0-477e-91ed-190b5a273817">
+
+
 
 This project recommends new songs based on your favorite tracks using the Spotify API. It enhances music discovery by analyzing your song preferences and suggesting similar music. Additionally, it provides rankings for the top artists in Japan and top songs, allowing you to get recommendations based on these rankings.
 
@@ -38,9 +41,3 @@ This project recommends new songs based on your favorite tracks using the Spotif
 2. Get a list of recommended tracks based on your input.
 3. Browse the top artists in Japan and top song rankings to discover new music.
 4. Get recommendations based on these rankings.
-
-## Contributing
-Feel free to fork this repository and make pull requests to improve the recommendation engine or the user interface.
-
-## License
-This project is licensed under the MIT License.
